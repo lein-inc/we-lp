@@ -1554,6 +1554,45 @@ footer .f-copy {
   footer .f-copy { grid-column: 1 / span 5; }
 }
 
+/* SP最適化（縦書きセクションタイトルの左ガター確保、ヒーロー2列縦書き、他）
+----------------------------------------------------*/
+@media (width < 1050px) {
+  /* 縦書きセクションタイトルのための左ガターを本文側に確保 */
+  section:not(.hero-sec) > .grid-10,
+  .contact-sec .container > .grid-10 {
+    padding-inline-start: 56px;
+  }
+  .section-title {
+    font-size: 13px;
+    top: 32px;
+    left: 20px;
+  }
+  .section-title.vertical-writing { letter-spacing: 0.16em; line-height: 1.85; }
+
+  /* ヒーロー：縦書き2行を両方表示（block+brで新カラム化） */
+  .hero-area .text {
+    display: block;
+    grid-column: 1 / span 2;
+    height: auto;
+    font-size: 16px;
+    letter-spacing: 0.34em;
+    line-height: 1.85em;
+    padding-block: 6px 0;
+    align-self: center;
+  }
+  .hero-area .text > span { display: inline; flex-basis: auto; }
+  .hero-area .hero-image {
+    grid-column: 3 / span 3;
+    align-self: center;
+  }
+
+  /* コンタクトフォーム内側：左ガター分を吸収して幅確保 */
+  .contact-sec .contact-inner { grid-column: 1 / -1; }
+
+  /* 実績カルーセルはガター内側の overflow: hidden を活かす */
+  .works-carousel { margin-inline-start: -8px; }
+}
+
 /* reduced motion
 ----------------------------------------------------*/
 @media (prefers-reduced-motion: reduce) {
