@@ -13,16 +13,22 @@
         <meta http-equiv="pragma" content="no-cache" />
 
         <style>
+            :root {
+                --we-main: #333333;
+                --we-sub: #6e6e6e;
+                --we-line: #dcdcdc;
+                --we-key: #c81e23;
+                --we-bg-soft: #f5f5f5;
+            }
+
             .staticrypt-hr {
-                margin-top: 20px;
-                margin-bottom: 20px;
-                border: 0;
-                border-top: 1px solid #eee;
+                display: none;
             }
 
             .staticrypt-page {
-                width: 360px;
-                padding: 8% 0 0;
+                width: 100%;
+                max-width: 400px;
+                padding: 0 24px;
                 margin: auto;
                 box-sizing: border-box;
             }
@@ -30,64 +36,81 @@
             .staticrypt-form {
                 position: relative;
                 z-index: 1;
-                background: #ffffff;
-                max-width: 360px;
-                margin: 0 auto 100px;
-                padding: 45px;
-                text-align: center;
-                box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+                background: transparent;
+                margin: 0 auto;
+                padding: 0;
+                text-align: left;
+                box-shadow: none;
             }
 
             .staticrypt-form input[type="password"],
             input[type="text"] {
-                background: inherit;
+                background: transparent;
                 border: 0;
-                box-sizing: border-box; /* This ensures padding is included in the total width */
+                box-sizing: border-box;
                 font-size: 14px;
                 outline: 0;
-                padding: 15px 30px 15px 15px; /* Adjust the padding to ensure there is space for the icon */
+                padding: 14px 40px 14px 0;
                 width: 100%;
+                color: var(--we-main);
+                font-family: inherit;
+                letter-spacing: 0.06em;
+            }
+
+            .staticrypt-form input[type="password"]::placeholder,
+            input[type="text"]::placeholder {
+                color: var(--we-sub);
+                letter-spacing: 0.12em;
             }
 
             .staticrypt-password-container {
                 position: relative;
                 outline: 0;
-                background: #f2f2f2;
+                background: transparent;
                 width: 100%;
                 border: 0;
-                margin: 0 0 15px;
+                border-bottom: 1px solid var(--we-line);
+                margin: 0 0 28px;
                 box-sizing: border-box;
+                transition: border-color 0.3s ease;
+            }
+
+            .staticrypt-password-container:focus-within {
+                border-bottom-color: var(--we-key);
             }
 
             .staticrypt-toggle-password-visibility {
                 cursor: pointer;
-                height: 20px;
-                opacity: 60%;
-                padding: 13px;
+                height: 16px;
+                opacity: 50%;
+                padding: 12px;
                 position: absolute;
-                right: 0;
+                right: -12px;
                 top: 50%;
                 transform: translateY(-50%);
-                width: 20px;
+                width: 16px;
             }
 
             .staticrypt-form .staticrypt-decrypt-button {
                 text-transform: uppercase;
                 outline: 0;
-                background: #4CAF50;
+                background: #000;
                 width: 100%;
                 border: 0;
-                padding: 15px;
+                padding: 14px 16px;
                 color: #ffffff;
-                font-size: 14px;
+                font-size: 12px;
+                letter-spacing: 0.18em;
                 cursor: pointer;
+                font-family: inherit;
+                transition: opacity 0.3s ease;
             }
 
             .staticrypt-form .staticrypt-decrypt-button:hover,
             .staticrypt-form .staticrypt-decrypt-button:active,
             .staticrypt-form .staticrypt-decrypt-button:focus {
-                background: #4CAF50;
-                filter: brightness(92%);
+                background: #000;
+                opacity: 0.78;
             }
 
             .staticrypt-html {
@@ -97,35 +120,72 @@
             .staticrypt-body {
                 height: 100%;
                 margin: 0;
-            }
-
-            .staticrypt-content {
-                height: 100%;
-                margin-bottom: 1em;
-                background: #76B852;
-                font-family: "Arial", sans-serif;
+                background: #ffffff;
+                color: var(--we-main);
+                font-family: ryo-gothic-plusn, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+                font-size: 12px;
+                line-height: 1.8;
+                letter-spacing: 0.04em;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
 
+            .staticrypt-content {
+                height: 100%;
+                margin-bottom: 0;
+                background: #ffffff;
+                font-family: inherit;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
             .staticrypt-instructions {
-                margin-top: -1em;
-                margin-bottom: 1em;
+                margin: 0 0 40px;
+                text-align: left;
+                position: relative;
             }
 
             .staticrypt-title {
-                font-size: 1.5em;
+                font-size: 15px;
+                font-weight: 500;
+                color: var(--we-main);
+                letter-spacing: 0.08em;
+                margin: 0;
+                display: flex;
+                align-items: center;
+            }
+
+            .staticrypt-title::before {
+                content: "";
+                display: inline-block;
+                width: 4px;
+                height: 4px;
+                background-color: var(--we-key);
+                border-radius: 50%;
+                margin-right: 0.8em;
+                flex: 0 0 4px;
+            }
+
+            .staticrypt-instructions p:empty {
+                display: none;
             }
 
             label.staticrypt-remember {
                 display: flex;
                 align-items: center;
-                margin-bottom: 1em;
+                margin-bottom: 20px;
+                font-size: 11px;
+                color: var(--we-sub);
+                letter-spacing: 0.08em;
             }
 
             .staticrypt-remember input[type="checkbox"] {
-                transform: scale(1.5);
-                margin-right: 1em;
+                transform: scale(1.1);
+                margin-right: 0.8em;
+                accent-color: var(--we-key);
             }
 
             .hidden {
@@ -209,7 +269,7 @@
 
                         <label id="staticrypt-remember-label" class="staticrypt-remember hidden">
                             <input id="staticrypt-remember" type="checkbox" name="remember" />
-                            Remember me
+                            次回から入力を省略
                         </label>
 
                         <input type="submit" class="staticrypt-decrypt-button" value="表示する" />
