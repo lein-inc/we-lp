@@ -1778,6 +1778,15 @@ footer .f-copy {
   .contact-lead, .privacy-hint, .clients-lead { font-size: 10px; line-height: 1.75; }
   .zero-content p + p { margin-top: 14px; }
   .faq-list summary { font-size: 12px; }              /* FAQ の Q を少し下げ */
+  .section-title { white-space: nowrap; }             /* 長い見出しが2列に折れて本文と重なるのを防ぐ */
+  /* プライバシーポリシー本文を小さく */
+  .privacy-box { font-size: 9px; line-height: 1.75; height: 150px; padding: 10px 12px; }
+  .privacy-box h5 { font-size: 9.5px; margin: 10px 0 2px; }
+  .privacy-consent { font-size: 11px; }
+  /* フォーム入力欄の高さを抑える */
+  .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { padding: 0.65em 0.9em; font-size: 12px; margin-top: 6px; }
+  .contact-sec .form-group:not(:last-of-type) { margin-bottom: 14px; }
+  .contact-sec button[type="submit"], .confirm-actions button { padding: 14px 16px; }
 
   /* Weロゴ：通常は非表示、コンタクト到達（.hide-fixed-ui）で表示 */
   .fixed-right .logo-area { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; }
