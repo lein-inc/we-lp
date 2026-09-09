@@ -1877,8 +1877,9 @@ footer .f-copy {
   .sp-menu-logo { position: absolute; right: 20px; bottom: 25px; margin: 0; }
   .sp-menu-logo img { display: block; width: 42px; height: auto; }
 
-  /* 右下の問い合わせバナーは右揃え（Weロゴは問い合わせ到達時のみなので余白不要） */
+  /* 右下の問い合わせバナーは右揃え（Weロゴは問い合わせ到達時のみなので余白不要）・一回り大きく */
   .fixed-right .contact-link { right: 20px; }
+  .fixed-right .contact-link a { font-size: 13px; padding: 8px 14px; }
   /* ヒーロー説明文の級数を抑える */
   .hero-area .message { font-size: 11px; }
 }
@@ -1914,7 +1915,8 @@ footer .f-copy {
   .privacy-box h5 { font-size: 10.5px; }
   .privacy-consent { font-size: 12px; }
   .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { font-size: 13px; }
-  .fixed-right .contact-link a, .sp-menu-contact a, .nda .more a { font-size: 13px; }
+  .sp-menu-contact a, .nda .more a { font-size: 13px; }
+  .fixed-right .contact-link a { font-size: 14px; }
   .sp-menu-list a { font-size: 17px; }
   footer .f-copy { font-size: 11px; }
 }
