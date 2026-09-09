@@ -280,9 +280,9 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 .fixed-right .contact-link a {
   background-color: #000;
   color: #fff;
-  padding: 6px 10px;   /* 「実績映像を見たい方はこちら」(.nda .more a) と同サイズ */
+  padding: 6px 10px;   /* 「実績映像を見たい方はこちら」(.nda .more a) と同サイズ・同高さ */
   font-size: 12px;
-  line-height: 1.4;
+  line-height: inherit;
   gap: 0 6px;
 }
 .fixed-right .contact-link a .text::after { display: none; }
@@ -1865,7 +1865,7 @@ footer .f-copy {
     color: #fff;
     padding: 6px 10px;
     font-size: 12px;
-    line-height: 1.4;
+    line-height: inherit;
     letter-spacing: 0.02em;
   }
   .sp-menu-contact a .text { border-bottom: 0 none; }
