@@ -133,11 +133,18 @@ section { position: relative; }
 .section-title {
   font-size: 14px;
   line-height: 1.9;
-  position: absolute;
+  /* セクション内でスクロールに追従（FB 2026-09-10）。float+width0 で本文レイアウトには影響させない */
+  position: sticky;
   top: 40px;
-  left: var(--grid-gap);
+  float: left;
+  width: 0;
+  overflow: visible;
+  margin-left: var(--grid-gap);
+  margin-right: calc(-1 * var(--grid-gap)); /* float の margin-box 幅を 0 にして本文をずらさない */
   z-index: 60;
 }
+/* 幅0ボックスの「右側」に文字を描くため vertical-lr（1列なので見た目は vertical-rl と同じ） */
+.section-title.vertical-writing { writing-mode: vertical-lr; }
 @media (width < 1050px) {
   .section-title { font-size: 12px; }
 }
@@ -1307,11 +1314,12 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 }
 .contact-sec .section-title {
   top: 100px;
+  margin-top: 70px; /* padding-top 30px + 70px = 100px（従来の見出し位置） */
   z-index: 80;
 }
 .contact-sec { --rail-offset: 100px; } /* レールは見出し頭から */
 @media (1050px <= width) {
-  .contact-sec .section-title { top: 140px; }
+  .contact-sec .section-title { top: 140px; margin-top: 110px; }
   .contact-sec { --rail-offset: 140px; }
 }
 .contact-sec .container {
@@ -1589,32 +1597,29 @@ footer .f-copy {
   .section-title {
     font-size: 11px;
     top: 32px;
-    left: 14px;
+    margin-left: 14px;
+    margin-right: -14px;
+    margin-top: -8px; /* padding-top 40px → 見出し開始 32px */
   }
   .section-title.vertical-writing { letter-spacing: 0.16em; line-height: 1.85; }
   /* SP 縦ライン（見出しの中心 14px + 11px/2 ≒ 19.5px） */
   .js-rail-section { --rail-offset: 32px; }
   .contact-sec { --rail-offset: 100px; }
   /* 線の長さは見出し文字の縦幅（JS が --rail-len / --rail-fill を px で更新） */
-  .js-rail-section::before {
+  /* SP の縦ラインは見出し（sticky）に付けて一緒に追従させる。長さ＝見出しの文字の縦幅 */
+  .js-rail-section::before, .js-rail-section::after { content: none; }
+  .js-rail-section .section-title { position: sticky; }
+  .js-rail-section .section-title::before,
+  .js-rail-section .section-title::after {
     content: "";
     position: absolute;
-    left: 19.5px;
-    top: var(--rail-offset);
-    height: var(--rail-len, 0px);
+    left: 0.925em; /* 文字列（1行＝line-height 1.85em）の中心 */
+    top: 0;
     width: 0.8px;
-    background-color: rgba(150, 150, 150, 0.2);
+    transform: translateX(-50%);
   }
-  .js-rail-section::after {
-    content: "";
-    position: absolute;
-    left: 19.5px;
-    top: var(--rail-offset);
-    width: 0.8px;
-    height: var(--rail-fill, 0px);
-    background-color: var(--main-font-color);
-    transition: height 0.1s linear;
-  }
+  .js-rail-section .section-title::before { height: 100%; background-color: rgba(150, 150, 150, 0.2); }
+  .js-rail-section .section-title::after { height: var(--rail-fill, 0px); background-color: var(--main-font-color); transition: height 0.1s linear; }
 
   /* ヒーロー（SP）：見出しはサムネイルの上部に縦書き2列（FB 2026-09-10） */
   .hero-area .text {
@@ -1763,9 +1768,8 @@ footer .f-copy {
   /* 2026-09-10 追加FB */
   .hero-area .text { font-size: 16px; }                 /* 見出しを少し小さく */
   .hero-area .key-phrase { font-size: 9px; }            /* 英字キャッチを小さく */
-  .section-title { left: 10px; }                        /* 縦文字を少し左に */
+  .section-title { margin-left: 10px; margin-right: -10px; } /* 縦文字を少し左に */
   .scroll { left: 12px; }
-  .js-rail-section::before, .js-rail-section::after { left: 15.5px; } /* 見出し中心に追従 */
   section:not(.hero-sec) > .grid-10, .contact-sec .container > .grid-10 { padding-inline-start: 40px; }
   /* 3段ロゴ：行間を詰め、段間のラインなし */
   .marquee-track a { height: 72px; padding: 16px 24px; }
@@ -1784,7 +1788,6 @@ footer .f-copy {
   .section-title {
     white-space: nowrap;
     inline-size: max-content;
-    block-size: auto;
     max-height: none;
     overflow: visible;
   }
