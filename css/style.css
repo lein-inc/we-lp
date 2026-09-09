@@ -1584,31 +1584,56 @@ footer .f-copy {
   /* 縦書きセクションタイトルのための左ガターを本文側に確保 */
   section:not(.hero-sec) > .grid-10,
   .contact-sec .container > .grid-10 {
-    padding-inline-start: 56px;
+    padding-inline-start: 44px;
   }
   .section-title {
-    font-size: 13px;
+    font-size: 11px;
     top: 32px;
-    left: 20px;
+    left: 14px;
   }
   .section-title.vertical-writing { letter-spacing: 0.16em; line-height: 1.85; }
+  /* SP 縦ライン（見出しの中心 14px + 11px/2 ≒ 19.5px） */
+  .js-rail-section { --rail-offset: 32px; }
+  .contact-sec { --rail-offset: 100px; }
+  .js-rail-section::before {
+    content: "";
+    position: absolute;
+    left: 19.5px;
+    top: var(--rail-offset);
+    bottom: 0;
+    width: 0.8px;
+    background-color: rgba(150, 150, 150, 0.2);
+  }
+  .js-rail-section::after {
+    content: "";
+    position: absolute;
+    left: 19.5px;
+    top: var(--rail-offset);
+    width: 0.8px;
+    height: var(--rail-progress);
+    background-color: var(--main-font-color);
+    transition: height 0.1s linear;
+  }
 
-  /* ヒーロー（SP）：見出しはサムネイルの上に横書き（FB 2026-09-10） */
+  /* ヒーロー（SP）：見出しはサムネイルの上部に縦書き2列（FB 2026-09-10） */
   .hero-area .text {
     display: block;
     grid-column: 1 / -1;
     grid-row: 1;
-    height: auto;
-    writing-mode: horizontal-tb;
-    text-orientation: mixed;
-    font-size: 20px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    line-height: 1.7;
-    text-align: left;
-    padding-block: 0;
-    margin-bottom: 18px;
+    justify-self: start;
     align-self: end;
+    height: auto;
+    width: auto;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    white-space: nowrap;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    line-height: 1.9em;
+    text-align: start;
+    padding-block: 0;
+    margin-bottom: 22px;
   }
   .hero-area .text > span { display: inline; flex-basis: auto; }
   .hero-area .hero-image {
@@ -1707,3 +1732,100 @@ footer .f-copy {
 }
 .contact-visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .contact-visual .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* SP限定改行 / PC区切り */
+.sp-br { display: none; }
+@media (width < 1050px) {
+  .sp-br { display: inline; }
+  .f-sep { display: none; }
+}
+
+/* SP：級数を少し抑える・note類は左頭流し込み・Weロゴは問い合わせ到達時のみ（FB 2026-09-10）
+----------------------------------------------------*/
+@media (width < 1050px) {
+  .problem-lead, .works-lead, .reason-lead, .pricing-lead { font-size: 13px; }
+  .problem-list h3 { font-size: 13px; }
+  .works-track figcaption b { font-size: 13px; }
+  .nda p:first-of-type { font-size: 15px; }
+  .reason-item h3 { font-size: 15px; }
+  .reason-note p { font-size: 12px; }
+  .reason-note .strong { font-size: 15px; }
+  .zero-content p { font-size: 13px; }
+  .flow-list h3 { font-size: 15px; }
+  .flow-note p { font-size: 13px; }
+  .pricing-item dt { font-size: 13px; }
+  .faq-list summary { font-size: 13px; }
+  .contact-heading { font-size: 16px; }
+  .hero-area .message { font-size: 12px; }
+
+  .reason-note, .flow-note, .contact-lead { text-align: left; }
+
+  /* Weロゴ：通常は非表示、コンタクト到達（.hide-fixed-ui）で表示 */
+  .fixed-right .logo-area { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; }
+  .hide-fixed-ui .fixed-right .logo-area { opacity: 1; visibility: visible; }
+}
+
+/* SP：ハンバーガーメニュー
+----------------------------------------------------*/
+.sp-menu-btn, .sp-menu { display: none; }
+@media (width < 1050px) {
+  .sp-menu-btn {
+    display: grid;
+    place-content: center;
+    gap: 6px;
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    z-index: 3000;
+    cursor: pointer;
+  }
+  .sp-menu-btn span {
+    display: block;
+    width: 22px;
+    height: 1.2px;
+    background-color: var(--main-font-color);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  html.on-dark .sp-menu-btn span { background-color: #fff; }
+  html.menu-open .sp-menu-btn span { background-color: var(--main-font-color); }
+  html.menu-open .sp-menu-btn span:first-child { transform: translateY(3.6px) rotate(45deg); }
+  html.menu-open .sp-menu-btn span:last-child { transform: translateY(-3.6px) rotate(-45deg); }
+  .sp-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 2900;
+    background-color: rgba(255, 255, 255, 0.97);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 32px 40px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .sp-menu[hidden] { display: flex; }
+  html.menu-open .sp-menu { opacity: 1; visibility: visible; }
+  html.menu-open { overflow: hidden; }
+  .sp-menu-list li + li { margin-top: 22px; }
+  .sp-menu-list a {
+    display: block;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+    color: var(--main-font-color);
+  }
+  .sp-menu-ext { margin-top: 40px; }
+  .sp-menu-ext a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--sub-gray);
+    border-bottom: 1px solid var(--line-gray);
+  }
+}

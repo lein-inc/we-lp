@@ -385,6 +385,52 @@
     document.documentElement.classList.add('on-dark');
   }
 
+  // SP：ハンバーガーメニュー
+  const menuBtn = document.querySelector('.sp-menu-btn');
+  const spMenu = document.getElementById('spMenu');
+  if (menuBtn && spMenu) {
+    const setMenu = (open) => {
+      document.documentElement.classList.toggle('menu-open', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+      spMenu.hidden = !open;
+    };
+    menuBtn.addEventListener('click', () => setMenu(!document.documentElement.classList.contains('menu-open')));
+    spMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+  }
+
+  // SP：クライアントロゴを 2段(8/8) → 3段(6/5/5) に組み替え（マーキーは各段2セットで -50% ループ）
+  const clientsMarquee = document.querySelector('.clients-marquee');
+  if (clientsMarquee && window.matchMedia('(width < 1050px)').matches) {
+    const uniques = Array.from(clientsMarquee.querySelectorAll('.marquee-track > li:not([aria-hidden])'));
+    if (uniques.length >= 12) {
+      const sizes = [Math.ceil(uniques.length * 6 / 16), 0, 0];
+      sizes[1] = Math.ceil((uniques.length - sizes[0]) / 2);
+      sizes[2] = uniques.length - sizes[0] - sizes[1];
+      const frag = document.createDocumentFragment();
+      let cursor = 0;
+      sizes.forEach((n, rowIdx) => {
+        const row = document.createElement('div');
+        row.className = 'marquee-row';
+        const track = document.createElement('ul');
+        track.className = 'marquee-track' + (rowIdx % 2 === 1 ? ' is-reverse' : '');
+        const items = uniques.slice(cursor, cursor + n); cursor += n;
+        items.forEach((li) => track.appendChild(li));
+        items.forEach((li) => {
+          const c = li.cloneNode(true);
+          c.setAttribute('aria-hidden', 'true');
+          c.querySelectorAll('a').forEach((a) => a.setAttribute('tabindex', '-1'));
+          c.querySelectorAll('img').forEach((im) => { im.setAttribute('alt', ''); im.removeAttribute('loading'); });
+          track.appendChild(c);
+        });
+        row.appendChild(track);
+        frag.appendChild(row);
+      });
+      clientsMarquee.replaceChildren(frag);
+    }
+  }
+
   // 右下固定UI：コンタクトセクション到達で非表示（ロゴは残す）
   const contactSec = document.getElementById('contact');
   if (contactSec && typeof IntersectionObserver === 'function') {
