@@ -1403,24 +1403,21 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 .privacy-box {
   height: 190px;
   overflow-y: auto;
-  background-color: #fff;
-  padding: 16px;
+  background-color: transparent;
+  border: 1px solid #bdbdbd;
+  padding: 14px 16px;
   margin-top: 8px;
   font-size: 11px;
   line-height: 1.9;
   color: var(--sub-gray);
   overscroll-behavior: contain;
 }
-.privacy-box h4 {
-  font-size: 12px;
-  color: var(--main-font-color);
-  margin-bottom: 12px;
-}
 .privacy-box h5 {
   font-size: 11px;
   color: var(--main-font-color);
   margin: 14px 0 4px;
 }
+.privacy-box h5:first-child { margin-top: 0; }
 .privacy-box ul {
   list-style: disc;
   padding-left: 1.4em;
@@ -1441,11 +1438,29 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   cursor: pointer;
 }
 .privacy-consent input {
-  width: 15px;
-  height: 15px;
-  accent-color: var(--key-color);
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  background-color: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 0;
+  display: grid;
+  place-content: center;
   cursor: pointer;
 }
+.privacy-consent input::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  background-color: var(--main-font-color);
+  transform: scale(0);
+  transition: transform 0.15s ease;
+}
+.privacy-consent input:checked::before { transform: scale(1); }
+.privacy-consent input:focus-visible { outline: 1px solid var(--main-font-color); outline-offset: 2px; }
 .privacy-consent input:disabled { cursor: not-allowed; }
 .privacy-consent:has(input:disabled) { opacity: 0.5; cursor: not-allowed; }
 .contact-sec .form-actions {
@@ -1459,18 +1474,20 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   width: 100%;
   padding: 20px 20px;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: #000;
+  border: 0;
   line-height: 1;
   display: inline-flex;
   font-family: inherit;
   letter-spacing: 0.08em;
-  color: var(--main-font-color);
+  color: #fff;
+  cursor: pointer;
 }
 .contact-sec button[type="submit"] .text {
   margin-right: auto;
   border-bottom: 0 none;
 }
-.contact-sec button[type="submit"]:hover { color: var(--key-color); }
+.contact-sec button[type="submit"]:hover { color: #fff; opacity: 0.8; }
 /* 確認画面 */
 .contact-confirm {
   max-width: 415px;
@@ -1522,6 +1539,9 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   color: var(--main-font-color);
 }
 .confirm-actions button .text { margin-inline: auto; border-bottom: 0 none; }
+/* 送信する＝主アクションは黒（「入力内容を確認する」と同トーン） */
+.confirm-actions button#confirmSend { background-color: #000; color: #fff; border: 0; }
+.confirm-actions button#confirmSend:hover { color: #fff; opacity: 0.8; }
 .confirm-actions button:hover { color: var(--key-color); }
 #confirmBack { color: var(--sub-gray); }
 
@@ -1644,15 +1664,15 @@ footer .f-copy {
   .flow-note p { font-size: 18px; }
   .pricing-item dt { font-size: 16px; }
   .faq-list summary { font-size: 16px; }
-  .contact-heading { font-size: 22px; }
-  .contact-sec .required { font-size: 11px; }
-  .contact-sec input[type="text"], .contact-sec input[type="email"], .contact-sec select { font-size: 15px; }
-  .privacy-box { font-size: 12px; }
-  .privacy-box h4 { font-size: 14px; }
-  .privacy-box h5 { font-size: 12px; }
-  .privacy-hint { font-size: 12px; }
-  .privacy-consent { font-size: 14px; }
-  .confirm-list dt { font-size: 14px; }
+  .contact-heading { font-size: 20px; }
+  .contact-sec form { font-size: 13px; }
+  .contact-sec .required { font-size: 10px; }
+  .contact-sec input[type="text"], .contact-sec input[type="email"], .contact-sec select { font-size: 13px; padding: 0.9em 1em; }
+  .privacy-box { font-size: 11px; }
+  .privacy-box h5 { font-size: 11px; }
+  .privacy-hint { font-size: 11px; }
+  .privacy-consent { font-size: 13px; }
+  .confirm-list dt { font-size: 13px; }
   .contact-thanks p:first-of-type { font-size: 18px; }
   footer .f-copy { font-size: 11px; }
 }
