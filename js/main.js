@@ -1,20 +1,51 @@
 (() => {
   'use strict';
 
-  // ヒーロー見出し：一文字ずつ表示（span内テキストを .ch に分割し遅延を段付け）
+  // 文字変換アニメーション共通（ヒーロー見出し・縦見出し）
+  const SCR_POOL = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン映像節目記憶光影時間設計物語未来会社式典';
+  const SCR_FIXED = /[、。「」・\s]/;
+  const SCR_REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scrRandom = () => SCR_POOL[Math.floor(Math.random() * SCR_POOL.length)];
+
+  // ヒーロー見出し：一文字ずつ表示（span内テキストを .ch に分割し遅延を段付け）＋文字変換しながら確定
   let chIndex = 0;
+  const heroChars = [];
   document.querySelectorAll('.hero-area .text > span').forEach((span) => {
     const chars = span.textContent.split('');
     span.textContent = '';
     chars.forEach((c) => {
       const ch = document.createElement('span');
       ch.className = 'ch';
-      ch.textContent = c;
+      ch.dataset.ch = c;
+      ch.textContent = (!SCR_REDUCE && !SCR_FIXED.test(c)) ? scrRandom() : c;
       ch.style.transitionDelay = (0.2 + chIndex * 0.09).toFixed(2) + 's';
       span.appendChild(ch);
+      heroChars.push({ el: ch, settleAt: (0.2 + chIndex * 0.09) * 1000 + 320 });
       chIndex += 1;
     });
   });
+  const runHeroScramble = () => {
+    if (SCR_REDUCE || !heroChars.length) { heroChars.forEach((o) => { o.el.textContent = o.el.dataset.ch; }); return; }
+    const t0 = performance.now();
+    let last = 0;
+    const tick = (now) => {
+      const el = now - t0;
+      let pending = false;
+      heroChars.forEach((o) => {
+        if (o.el.dataset.done) return;
+        if (SCR_FIXED.test(o.el.dataset.ch) || el >= o.settleAt) {
+          o.el.textContent = o.el.dataset.ch;
+          o.el.dataset.done = '1';
+        } else {
+          pending = true;
+          if (now - last > 60) o.el.textContent = scrRandom();
+        }
+      });
+      if (now - last > 60) last = now;
+      if (pending) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
 
   // セクション英字ラベル：一文字ずつ表示（スクロール到達 .active で発火）
   document.querySelectorAll('.sec-en').forEach((el) => {
@@ -108,7 +139,7 @@
 
   // オープニング（ヒーロー段階出現）：画像ロード待ち→ we-ready
   const heroImg = document.querySelector('.hero-image img');
-  const start = () => document.documentElement.classList.add('we-ready');
+  const start = () => { document.documentElement.classList.add('we-ready'); runHeroScramble(); };
   if (heroImg && !heroImg.complete) {
     let done = false;
     const go = () => { if (!done) { done = true; start(); } };
@@ -318,9 +349,9 @@
   (function initTitleScramble() {
     const titles = document.querySelectorAll('.section-title');
     if (!titles.length) return;
-    const POOL = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン映像節目記憶光影時間設計物語未来会社式典';
-    const FIXED = /[、。「」・\s]/;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const POOL = SCR_POOL;
+    const FIXED = SCR_FIXED;
+    const reduce = SCR_REDUCE;
     titles.forEach((t) => {
       const spans = [];
       const wrap = (node) => {
