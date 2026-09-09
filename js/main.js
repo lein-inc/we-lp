@@ -161,15 +161,17 @@
       // 背景：同じ絵をぼかして大きく敷く（CSS側でblur）
       const heroSec = withBg ? wrap.closest('.hero-sec') : null;
 
-      // C案：カットの色を3点サンプリングして --g1/--g2/--g3 に反映（白文字が読めるよう明度を抑える）
+      // C案：カットを 3×2 の領域に分け、各領域の「最頻色」（彩度で重み付け）を抽出して --g1〜--g6 に反映
+      //（平均色だと濁るので、量子化ヒストグラムの最大バケットを採用。白文字が読めるよう明度は 0.16〜0.44 に整える）
       const gradEl = heroSec && document.body.classList.contains('hero-gradient') ? heroSec : null;
       const palettes = [];
+      const GRID_X = 3, GRID_Y = 2;
       if (gradEl) {
+        const PW = 48, PH = 27;
         const pc = document.createElement('canvas');
-        pc.width = 12; pc.height = 12;
+        pc.width = PW; pc.height = PH;
         const pctx = pc.getContext('2d', { willReadFrequently: true });
-        const clampColor = (r, g, b) => {
-          // RGB→HSL、明度 0.16〜0.40・彩度は下限 0.22 に整えて戻す
+        const toHsl = (r, g, b) => {
           r /= 255; g /= 255; b /= 255;
           const max = Math.max(r, g, b), min = Math.min(r, g, b);
           let h = 0, sat = 0; const l = (max + min) / 2;
@@ -180,27 +182,48 @@
             else if (max === g) h = ((b - r) / d + 2) / 6;
             else h = ((r - g) / d + 4) / 6;
           }
-          const L = Math.min(0.40, Math.max(0.16, l));
-          const S = Math.min(0.75, Math.max(0.22, sat));
+          return [h, sat, l];
+        };
+        const fmt = (h, sat, l) => {
+          const L = Math.min(0.44, Math.max(0.16, l));
+          const S = Math.min(0.85, Math.max(0.25, sat));
           return 'hsl(' + Math.round(h * 360) + ' ' + Math.round(S * 100) + '% ' + Math.round(L * 100) + '%)';
         };
-        const avg = (x0, y0, x1, y1) => {
+        const dominant = (x0, y0, x1, y1) => {
           const d = pctx.getImageData(x0, y0, x1 - x0, y1 - y0).data;
-          let r = 0, g = 0, b = 0, n = 0;
-          for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; n += 1; }
-          return clampColor(r / n, g / n, b / n);
+          const buckets = new Map();
+          for (let i = 0; i < d.length; i += 4) {
+            const r = d[i], g = d[i + 1], b = d[i + 2];
+            const key = ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4); // 16段階/ch
+            const e = buckets.get(key) || { n: 0, r: 0, g: 0, b: 0 };
+            e.n += 1; e.r += r; e.g += g; e.b += b;
+            buckets.set(key, e);
+          }
+          let best = null, bestScore = -1;
+          buckets.forEach((e) => {
+            const [, sat, l] = toHsl(e.r / e.n, e.g / e.n, e.b / e.n);
+            // 出現数 × (彩度の重み) 。極端に白い／黒いバケットは減点
+            const score = e.n * (0.35 + sat) * (l > 0.92 || l < 0.06 ? 0.15 : 1);
+            if (score > bestScore) { bestScore = score; best = e; }
+          });
+          const [h, sat, l] = toHsl(best.r / best.n, best.g / best.n, best.b / best.n);
+          return fmt(h, sat, l);
         };
         frames.forEach((im) => {
-          pctx.clearRect(0, 0, 12, 12);
-          pctx.drawImage(im, 0, 0, 12, 12);
-          palettes.push([avg(0, 0, 6, 6), avg(3, 3, 9, 9), avg(6, 6, 12, 12)]);
+          pctx.clearRect(0, 0, PW, PH);
+          pctx.drawImage(im, 0, 0, PW, PH);
+          const cols = [];
+          for (let gy = 0; gy < GRID_Y; gy++) {
+            for (let gx = 0; gx < GRID_X; gx++) {
+              cols.push(dominant(Math.round(gx * PW / GRID_X), Math.round(gy * PH / GRID_Y), Math.round((gx + 1) * PW / GRID_X), Math.round((gy + 1) * PH / GRID_Y)));
+            }
+          }
+          palettes.push(cols);
         });
       }
       const applyPalette = (i) => {
         if (!gradEl || !palettes[i]) return;
-        gradEl.style.setProperty('--g1', palettes[i][0]);
-        gradEl.style.setProperty('--g2', palettes[i][1]);
-        gradEl.style.setProperty('--g3', palettes[i][2]);
+        palettes[i].forEach((c, k) => gradEl.style.setProperty('--g' + (k + 1), c));
       };
       const bg = document.createElement('canvas');
       bg.className = 'hero-bg-canvas';

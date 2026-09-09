@@ -7,14 +7,24 @@
 @property --g1 { syntax: '<color>'; inherits: true; initial-value: #14161a; }
 @property --g2 { syntax: '<color>'; inherits: true; initial-value: #1c2026; }
 @property --g3 { syntax: '<color>'; inherits: true; initial-value: #101216; }
+@property --g4 { syntax: '<color>'; inherits: true; initial-value: #181a20; }
+@property --g5 { syntax: '<color>'; inherits: true; initial-value: #121418; }
+@property --g6 { syntax: '<color>'; inherits: true; initial-value: #1a1c22; }
 
+/* サムネを 3×2 に分けた各領域の色を、同じ配置（左上→右下）にラジアルで置く */
 body.hero-gradient .hero-sec {
   background-color: #14161a;
   background-image:
-    radial-gradient(ellipse 80% 70% at 15% 20%, var(--g1) 0%, transparent 70%),
-    radial-gradient(ellipse 70% 80% at 85% 80%, var(--g3) 0%, transparent 70%),
-    linear-gradient(135deg, var(--g1) 0%, var(--g2) 50%, var(--g3) 100%);
-  transition: --g1 1.1s ease-in-out, --g2 1.1s ease-in-out, --g3 1.1s ease-in-out;
+    radial-gradient(ellipse 60% 75% at 8% 15%,  var(--g1) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 70% at 50% 0%,  var(--g2) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 75% at 92% 15%, var(--g3) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 75% at 8% 90%,  var(--g4) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 70% at 50% 100%, var(--g5) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 75% at 92% 90%, var(--g6) 0%, transparent 70%),
+    linear-gradient(135deg, var(--g1) 0%, var(--g2) 25%, var(--g5) 60%, var(--g6) 100%);
+  transition:
+    --g1 1.1s ease-in-out, --g2 1.1s ease-in-out, --g3 1.1s ease-in-out,
+    --g4 1.1s ease-in-out, --g5 1.1s ease-in-out, --g6 1.1s ease-in-out;
 }
 /* ぼかし背景キャンバスは使わない（グラデーションが背景） */
 body.hero-gradient .hero-bg-canvas { display: none; }
