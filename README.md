@@ -10,8 +10,9 @@ GitHub Pages: https://lein-inc.github.io/we-lp/
 
 ## 構成
 
-- `src/index.html` — 編集用の原本（パスワード保護なし）
-- `index.html` — staticrypt で暗号化済みの公開ファイル
+- `src/index.html` — 編集用の原本（A案：白ヒーロー、パスワード保護なし）
+- `src/index-b.html` — B案（ヒーロー背景黒）。A案から `<body class="hero-dark">` + `css/hero-dark.css` 読込の差分のみ。A案更新後は sed で再生成する
+- `index.html` / `index-b.html` — staticrypt で暗号化済みの公開ファイル（A案 / B案）
 - `css/style.css`, `js/main.js`, `img/` — 共通アセット（root配下、両方から参照）
 - `.staticrypt.json` — staticrypt の設定（salt）
 - `.github/workflows/pages.yml` — GitHub Pages デプロイワークフロー

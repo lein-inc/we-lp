@@ -1610,3 +1610,49 @@ footer .f-copy {
     transition: none;
   }
 }
+
+/* PC可読性向上（2026-09-09 FB：LPなので文字を一段大きく。企業向け＝PC優先）
+   12px基準→14px基準。SP(<1050px)は据え置き。
+----------------------------------------------------*/
+@media (1050px <= width) {
+  body { font-size: 14px; }
+  .section-title { font-size: 16px; }
+  .sec-en { font-size: 12px; }
+  .ic-link { font-size: 14px; }
+  .fixed-right .contact-link a { font-size: 11px; }
+  .lnav-list a { font-size: 11px; }
+  .hero-area .key-phrase { font-size: 12px; }
+  .hero-area .message { font-size: 16px; }
+  .hero-area .cred { font-size: 12px; }
+  .scroll { font-size: 11px; }
+  .problem-lead, .works-lead, .reason-lead, .pricing-lead { font-size: 18px; }
+  .problem-list h3 { font-size: 16px; }
+  .works-track figcaption b { font-size: 16px; }
+  .works-type { font-size: 12px; }
+  .nda p:first-of-type { font-size: 20px; }
+  .nda .more a { font-size: 14px; }
+  .clients-lead { font-size: 14px; }
+  .clients-note { font-size: 12px; }
+  .reason-item h3 { font-size: 18px; }
+  .reason-item h4 { font-size: 13px; }
+  .reason-item .we h4 { font-size: 14px; }
+  .reason-note p { font-size: 15px; }
+  .reason-note .strong { font-size: 20px; }
+  .zero-content p { font-size: 18px; }
+  .flow-list .step { font-size: 12px; }
+  .flow-list h3 { font-size: 18px; }
+  .flow-note p { font-size: 18px; }
+  .pricing-item dt { font-size: 16px; }
+  .faq-list summary { font-size: 16px; }
+  .contact-heading { font-size: 22px; }
+  .contact-sec .required { font-size: 11px; }
+  .contact-sec input[type="text"], .contact-sec input[type="email"], .contact-sec select { font-size: 15px; }
+  .privacy-box { font-size: 12px; }
+  .privacy-box h4 { font-size: 14px; }
+  .privacy-box h5 { font-size: 12px; }
+  .privacy-hint { font-size: 12px; }
+  .privacy-consent { font-size: 14px; }
+  .confirm-list dt { font-size: 14px; }
+  .contact-thanks p:first-of-type { font-size: 18px; }
+  footer .f-copy { font-size: 11px; }
+}

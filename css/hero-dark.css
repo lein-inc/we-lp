@@ -1,0 +1,49 @@
+/* =====================================================
+   B案：ヒーロー背景ダーク（2026-09-09 FB「背景黒感もあり」）
+   body.hero-dark を付けた時だけ有効。他セクションは白のまま。
+   ===================================================== */
+body.hero-dark .hero-sec {
+  background-color: #0b0b0b;
+  color: #ffffff;
+}
+/* 背景のにじみ：黒地に対して発光感を少し強める */
+body.hero-dark .hero-bg-canvas { filter: blur(9px) saturate(1.15); }
+.we-ready body.hero-dark .hero-bg-canvas { opacity: 0.34; }
+/* 黒地の上で画像の縁を締める */
+body.hero-dark .hero-area .hero-image {
+  outline: 1px solid rgba(255, 255, 255, 0.08);
+  outline-offset: -1px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.55);
+}
+body.hero-dark .hero-area .text { color: #ffffff; }
+body.hero-dark .hero-area .key-phrase { color: #ffffff; }
+body.hero-dark .hero-area .message { color: #ededed; }
+body.hero-dark .hero-area .cred { color: #9a9a9a; }
+body.hero-dark .scroll-wrapper .scroll { color: #ffffff; }
+body.hero-dark .scroll .ic { color: var(--key-color); }
+
+/* ヒーロー内の進捗レール・下線色 */
+body.hero-dark .hero-sec::before,
+body.hero-dark .hero-sec::after { background-color: rgba(255, 255, 255, 0.18); }
+
+/* 右端固定UI：ヒーローが画面を占めている間だけ白抜きに反転（JSで html.on-dark を付与） */
+.fixed-right .contact-link a,
+.lnav-list a,
+.lnav-list a > span,
+.logo-we { transition: color 0.4s ease, background-color 0.4s ease, filter 0.4s ease; }
+html.on-dark .fixed-right .contact-link a { background-color: #ffffff; color: #0b0b0b; }
+html.on-dark .fixed-right .contact-link a:hover { color: #0b0b0b; opacity: 0.8; }
+html.on-dark .lnav-list a {
+  color: #b5b5b5;
+  --_border-color: #3a3a3a;
+  --_active-color: #ffffff;
+}
+html.on-dark .lnav-list a > span { background: #0b0b0b; }
+html.on-dark .lnav-list a:hover,
+html.on-dark .lnav-list a.current { color: #ffffff; }
+html.on-dark .logo-we { filter: invert(1) brightness(1.45); }
+
+/* SP：ヒーロー下端と白セクションの境目を少しだけ余白で受ける */
+@media (width < 1050px) {
+  body.hero-dark .hero-sec { padding-bottom: 0; }
+}

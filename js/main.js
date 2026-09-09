@@ -302,6 +302,18 @@
     targets.forEach((t) => navIo.observe(t.el));
   }
 
+  // B案（body.hero-dark）：ヒーローが画面上半分を占めている間、右端固定UIを白抜きに反転
+  const heroSec = document.querySelector('.hero-sec');
+  if (heroSec && document.body.classList.contains('hero-dark') && typeof IntersectionObserver === 'function') {
+    const darkIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        document.documentElement.classList.toggle('on-dark', entry.isIntersecting);
+      });
+    }, { rootMargin: '-72% 0px 0px 0px' }); // 画面下部28%（固定UIの位置）にヒーローが掛かっている間だけ反転
+    darkIo.observe(heroSec);
+    document.documentElement.classList.add('on-dark');
+  }
+
   // 右下固定UI：コンタクトセクション到達で非表示（ロゴは残す）
   const contactSec = document.getElementById('contact');
   if (contactSec && typeof IntersectionObserver === 'function') {
@@ -360,7 +372,7 @@
       if (!confirmBox) return;
       confirmBox.querySelectorAll('[data-confirm]').forEach((dd) => {
         const field = form.querySelector('#' + dd.getAttribute('data-confirm'));
-        dd.textContent = field ? field.value.trim() : '';
+        dd.textContent = field && field.value.trim() !== '' ? field.value.trim() : '—';
       });
       form.style.display = 'none';
       confirmBox.hidden = false;
