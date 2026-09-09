@@ -1682,3 +1682,18 @@ footer .f-copy {
 /* PC限定改行（FB 2026-09-09） */
 .pc-br { display: none; }
 @media (1050px <= width) { .pc-br { display: inline; } }
+
+/* コンタクト：リード文下の実績モザイクビジュアル（ヒーローのスライドショーを流用） */
+.contact-visual {
+  position: relative;
+  max-width: 415px;
+  aspect-ratio: 16 / 9;
+  margin: -16px auto 48px;
+  overflow: hidden;
+  background-color: #111;
+}
+@media (1050px <= width) {
+  .contact-visual { max-width: 720px; margin-top: -8px; margin-bottom: 64px; }
+}
+.contact-visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.contact-visual .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }

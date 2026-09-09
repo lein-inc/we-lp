@@ -119,11 +119,12 @@
     requestAnimationFrame(() => requestAnimationFrame(start));
   }
 
-  // ヒーロー：実績サムネのモザイク切替スライドショー
+  // 実績サムネのモザイク切替スライドショー（ヒーロー＋コンタクト下のビジュアルで共用）
   // 表示2.2s→モザイク遷移1.1s（ピクセルが粗くなり色が混ざって次カットへ繋がる）
   const heroWrap = document.querySelector('.hero-image');
+  const contactWrap = document.querySelector('.contact-visual');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (heroWrap && !reduceMotion && typeof HTMLCanvasElement === 'function') {
+  if ((heroWrap || contactWrap) && !reduceMotion && typeof HTMLCanvasElement === 'function') {
     const names = ['one-and-co', 'smbc', 'softbank', 'recruit', 'mitsui-fudosan', 'speeda', 'loglass', 'lib-consulting', 'newspicks'];
     const HOLD = 2200;
     const TRANS = 1100;
@@ -145,17 +146,20 @@
     function startSlideshow() {
       const frames = imgs.filter((im) => im && im.naturalWidth > 0);
       if (frames.length < 2) return;
+      if (heroWrap) runMosaic(heroWrap, true, 0);
+      if (contactWrap) runMosaic(contactWrap, false, Math.floor(frames.length / 2)); // ヒーローと別カットから開始
 
+    function runMosaic(wrap, withBg, startIdx) {
       const canvas = document.createElement('canvas');
       canvas.className = 'hero-canvas';
       canvas.setAttribute('aria-hidden', 'true');
-      heroWrap.appendChild(canvas);
+      wrap.appendChild(canvas);
       const ctx = canvas.getContext('2d');
       const off = document.createElement('canvas');
       const offCtx = off.getContext('2d');
 
       // 背景：同じ絵をぼかして大きく敷く（CSS側でblur）
-      const heroSec = heroWrap.closest('.hero-sec');
+      const heroSec = withBg ? wrap.closest('.hero-sec') : null;
       const bg = document.createElement('canvas');
       bg.className = 'hero-bg-canvas';
       bg.setAttribute('aria-hidden', 'true');
@@ -164,8 +168,8 @@
 
       const resize = () => {
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        canvas.width = Math.max(1, Math.round(heroWrap.clientWidth * dpr));
-        canvas.height = Math.max(1, Math.round(heroWrap.clientHeight * dpr));
+        canvas.width = Math.max(1, Math.round(wrap.clientWidth * dpr));
+        canvas.height = Math.max(1, Math.round(wrap.clientHeight * dpr));
         if (heroSec) {
           // ぼかすので低解像度で十分
           bg.width = Math.max(1, Math.round(heroSec.clientWidth / 4));
@@ -211,7 +215,7 @@
         ctx.imageSmoothingEnabled = true;
       };
 
-      let idx = 0;
+      let idx = startIdx % frames.length;
       let phase = 'hold'; // hold | trans
       let phaseStart = performance.now();
 
@@ -240,6 +244,7 @@
         requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
+    }
     }
   }
 
