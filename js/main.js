@@ -333,6 +333,7 @@
   const railSections = document.querySelectorAll('.js-rail-section');
   if (railSections.length) {
     let ticking = false;
+    const isSP = window.matchMedia('(width < 1050px)');
     const update = () => {
       ticking = false;
       const vh = window.innerHeight;
@@ -340,7 +341,15 @@
         const rect = sec.getBoundingClientRect();
         const total = rect.height;
         const passed = Math.min(Math.max(vh * 0.7 - rect.top, 0), total);
-        sec.style.setProperty('--rail-progress', (passed / total * 100).toFixed(2) + '%');
+        const ratio = passed / total;
+        sec.style.setProperty('--rail-progress', (ratio * 100).toFixed(2) + '%');
+        // SP：線の長さ＝縦書き見出しの文字の縦幅。進捗もその長さ内で px 指定
+        if (isSP.matches) {
+          const title = sec.querySelector('.section-title');
+          const len = title ? title.getBoundingClientRect().height : 0;
+          sec.style.setProperty('--rail-len', len.toFixed(1) + 'px');
+          sec.style.setProperty('--rail-fill', (len * ratio).toFixed(1) + 'px');
+        }
       });
     };
     const onScroll = () => {

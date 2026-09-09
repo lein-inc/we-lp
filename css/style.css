@@ -1595,12 +1595,13 @@ footer .f-copy {
   /* SP 縦ライン（見出しの中心 14px + 11px/2 ≒ 19.5px） */
   .js-rail-section { --rail-offset: 32px; }
   .contact-sec { --rail-offset: 100px; }
+  /* 線の長さは見出し文字の縦幅（JS が --rail-len / --rail-fill を px で更新） */
   .js-rail-section::before {
     content: "";
     position: absolute;
     left: 19.5px;
     top: var(--rail-offset);
-    bottom: 0;
+    height: var(--rail-len, 0px);
     width: 0.8px;
     background-color: rgba(150, 150, 150, 0.2);
   }
@@ -1610,7 +1611,7 @@ footer .f-copy {
     left: 19.5px;
     top: var(--rail-offset);
     width: 0.8px;
-    height: var(--rail-progress);
+    height: var(--rail-fill, 0px);
     background-color: var(--main-font-color);
     transition: height 0.1s linear;
   }
