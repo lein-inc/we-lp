@@ -1,0 +1,28 @@
+/* =====================================================
+   C案：ヒーロー背景＝サムネイルの色を踏襲したグラデーション
+   body.hero-dark.hero-gradient（hero-dark.css の後に読み込む）
+   JS(runMosaic) が各カットから3色を抽出し --g1/--g2/--g3 を更新、
+   @property 登録により色が 1.1s で補間されてカット切替と同期する。
+   ===================================================== */
+@property --g1 { syntax: '<color>'; inherits: true; initial-value: #14161a; }
+@property --g2 { syntax: '<color>'; inherits: true; initial-value: #1c2026; }
+@property --g3 { syntax: '<color>'; inherits: true; initial-value: #101216; }
+
+body.hero-gradient .hero-sec {
+  background-color: #14161a;
+  background-image:
+    radial-gradient(ellipse 80% 70% at 15% 20%, var(--g1) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 80% at 85% 80%, var(--g3) 0%, transparent 70%),
+    linear-gradient(135deg, var(--g1) 0%, var(--g2) 50%, var(--g3) 100%);
+  transition: --g1 1.1s ease-in-out, --g2 1.1s ease-in-out, --g3 1.1s ease-in-out;
+}
+/* ぼかし背景キャンバスは使わない（グラデーションが背景） */
+body.hero-gradient .hero-bg-canvas { display: none; }
+/* 中央の減光は弱めに（色を見せる） */
+body.hero-gradient .hero-sec::before {
+  background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.22), rgba(0,0,0,0) 70%);
+}
+body.hero-gradient .hero-area .hero-image {
+  outline-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.45);
+}

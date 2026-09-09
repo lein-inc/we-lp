@@ -160,6 +160,48 @@
 
       // 背景：同じ絵をぼかして大きく敷く（CSS側でblur）
       const heroSec = withBg ? wrap.closest('.hero-sec') : null;
+
+      // C案：カットの色を3点サンプリングして --g1/--g2/--g3 に反映（白文字が読めるよう明度を抑える）
+      const gradEl = heroSec && document.body.classList.contains('hero-gradient') ? heroSec : null;
+      const palettes = [];
+      if (gradEl) {
+        const pc = document.createElement('canvas');
+        pc.width = 12; pc.height = 12;
+        const pctx = pc.getContext('2d', { willReadFrequently: true });
+        const clampColor = (r, g, b) => {
+          // RGB→HSL、明度 0.16〜0.40・彩度は下限 0.22 に整えて戻す
+          r /= 255; g /= 255; b /= 255;
+          const max = Math.max(r, g, b), min = Math.min(r, g, b);
+          let h = 0, sat = 0; const l = (max + min) / 2;
+          if (max !== min) {
+            const d = max - min;
+            sat = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+            else if (max === g) h = ((b - r) / d + 2) / 6;
+            else h = ((r - g) / d + 4) / 6;
+          }
+          const L = Math.min(0.40, Math.max(0.16, l));
+          const S = Math.min(0.75, Math.max(0.22, sat));
+          return 'hsl(' + Math.round(h * 360) + ' ' + Math.round(S * 100) + '% ' + Math.round(L * 100) + '%)';
+        };
+        const avg = (x0, y0, x1, y1) => {
+          const d = pctx.getImageData(x0, y0, x1 - x0, y1 - y0).data;
+          let r = 0, g = 0, b = 0, n = 0;
+          for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; n += 1; }
+          return clampColor(r / n, g / n, b / n);
+        };
+        frames.forEach((im) => {
+          pctx.clearRect(0, 0, 12, 12);
+          pctx.drawImage(im, 0, 0, 12, 12);
+          palettes.push([avg(0, 0, 6, 6), avg(3, 3, 9, 9), avg(6, 6, 12, 12)]);
+        });
+      }
+      const applyPalette = (i) => {
+        if (!gradEl || !palettes[i]) return;
+        gradEl.style.setProperty('--g1', palettes[i][0]);
+        gradEl.style.setProperty('--g2', palettes[i][1]);
+        gradEl.style.setProperty('--g3', palettes[i][2]);
+      };
       const bg = document.createElement('canvas');
       bg.className = 'hero-bg-canvas';
       bg.setAttribute('aria-hidden', 'true');
@@ -218,13 +260,14 @@
       let idx = startIdx % frames.length;
       let phase = 'hold'; // hold | trans
       let phaseStart = performance.now();
+      applyPalette(idx);
 
       const tick = (now) => {
         const elapsed = now - phaseStart;
         if (phase === 'hold') {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           drawPixelated(frames[idx], 1, 1);
-          if (elapsed >= HOLD) { phase = 'trans'; phaseStart = now; }
+          if (elapsed >= HOLD) { phase = 'trans'; phaseStart = now; applyPalette((idx + 1) % frames.length); }
         } else {
           const p = Math.min(elapsed / TRANS, 1);
           // ブロックサイズは山なり（細→粗→細）で色の面が繋がる
