@@ -1744,7 +1744,8 @@ footer .f-copy {
 /* SP：級数を少し抑える・note類は左頭流し込み・Weロゴは問い合わせ到達時のみ（FB 2026-09-10）
 ----------------------------------------------------*/
 @media (width < 1050px) {
-  .problem-lead, .works-lead, .reason-lead, .pricing-lead { font-size: 13px; }
+  .problem-lead, .works-lead, .reason-lead, .pricing-lead { font-size: 12px; line-height: 1.9; }
+  .clients-note { font-size: 9px; line-height: 1.8; }
   .problem-list h3 { font-size: 13px; }
   .works-track figcaption b { font-size: 13px; }
   .nda p:first-of-type { font-size: 15px; }
@@ -1757,8 +1758,6 @@ footer .f-copy {
   .pricing-item dt { font-size: 13px; }
   .faq-list summary { font-size: 13px; }
   .contact-heading { font-size: 16px; }
-  .hero-area .message { font-size: 12px; }
-
   .reason-note, .flow-note, .contact-lead { text-align: left; }
 
   /* Weロゴ：通常は非表示、コンタクト到達（.hide-fixed-ui）で表示 */
@@ -1819,14 +1818,27 @@ footer .f-copy {
     letter-spacing: 0.12em;
     color: var(--main-font-color);
   }
-  .sp-menu-ext { margin-top: 40px; }
-  .sp-menu-ext a {
+  /* メニュー内の問い合わせ：右下固定バナーと同デザイン（黒地・白文字・矢印） */
+  .sp-menu-contact { margin-top: 40px; }
+  .sp-menu-contact a {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    color: var(--sub-gray);
-    border-bottom: 1px solid var(--line-gray);
+    gap: 0 5px;
+    background-color: #000;
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
   }
+  .sp-menu-contact a .text { border-bottom: 0 none; }
+  .sp-menu-contact a:hover { color: #fff; opacity: 0.75; }
+  /* We ロゴ：メニュー右下 */
+  .sp-menu-logo { position: absolute; right: 20px; bottom: 25px; margin: 0; }
+  .sp-menu-logo img { display: block; width: 42px; height: auto; }
+
+  /* 右下の問い合わせバナーは右揃え（Weロゴは問い合わせ到達時のみなので余白不要） */
+  .fixed-right .contact-link { right: 20px; }
+  /* ヒーロー説明文の級数を抑える */
+  .hero-area .message { font-size: 11px; }
 }
