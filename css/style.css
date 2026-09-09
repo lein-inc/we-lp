@@ -558,7 +558,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   .js-rail-section::before {
     content: "";
     position: absolute;
-    left: 56.5px;
+    left: 48px; /* 見出し文字（x≈53〜）の左側 */
     top: var(--rail-offset);
     bottom: 0;
     width: 0.8px;
@@ -567,7 +567,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   .js-rail-section::after {
     content: "";
     position: absolute;
-    left: 56.5px;
+    left: 48px; /* 見出し文字（x≈53〜）の左側 */
     top: var(--rail-offset);
     width: 0.8px;
     height: var(--rail-progress);
@@ -1613,10 +1613,9 @@ footer .f-copy {
   .js-rail-section .section-title::after {
     content: "";
     position: absolute;
-    left: 0.925em; /* 文字列（1行＝line-height 1.85em）の中心 */
+    left: -3px; /* 文字の左側（文字に重ねない） */
     top: 0;
     width: 0.8px;
-    transform: translateX(-50%);
   }
   .js-rail-section .section-title::before { height: 100%; background-color: rgba(150, 150, 150, 0.2); }
   .js-rail-section .section-title::after { height: var(--rail-fill, 0px); background-color: var(--main-font-color); transition: height 0.1s linear; }
