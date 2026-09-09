@@ -688,7 +688,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   padding-top: 40px;
 }
 @media (1050px <= width) {
-  .works-sec { margin-top: 150px; --rail-offset: 60px; }
+  .works-sec { margin-top: 150px; --rail-offset: 40px; /* 見出し頭に揃える */ }
 }
 .works-lead {
   grid-column: 1 / -1;
@@ -1052,7 +1052,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   padding-top: 40px;
 }
 @media (1050px <= width) {
-  .flow-sec { margin-top: 150px; --rail-offset: 60px; }
+  .flow-sec { margin-top: 150px; --rail-offset: 40px; /* 見出し頭に揃える */ }
 }
 .flow-list {
   grid-column: 1 / -1;
@@ -1309,8 +1309,10 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   top: 100px;
   z-index: 80;
 }
+.contact-sec { --rail-offset: 100px; } /* レールは見出し頭から */
 @media (1050px <= width) {
   .contact-sec .section-title { top: 140px; }
+  .contact-sec { --rail-offset: 140px; }
 }
 .contact-sec .container {
   padding-block: 92px;
@@ -1686,14 +1688,14 @@ footer .f-copy {
 /* コンタクト：リード文下の実績モザイクビジュアル（ヒーローのスライドショーを流用） */
 .contact-visual {
   position: relative;
-  max-width: 300px;
+  max-width: 240px;
   aspect-ratio: 16 / 9;
   margin: -12px auto 44px;
   overflow: hidden;
   background-color: #111;
 }
 @media (1050px <= width) {
-  .contact-visual { max-width: 480px; margin-top: -4px; margin-bottom: 60px; }
+  .contact-visual { max-width: 380px; margin-top: -4px; margin-bottom: 56px; }
 }
 .contact-visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .contact-visual .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }

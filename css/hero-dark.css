@@ -5,10 +5,19 @@
 body.hero-dark .hero-sec {
   background-color: #0b0b0b;
   color: #ffffff;
+  isolation: isolate; /* z-index:-1 の背景キャンバスを section 背景より手前に描く */
 }
-/* 背景のにじみ：黒地に対して発光感を少し強める */
-body.hero-dark .hero-bg-canvas { filter: blur(9px) saturate(1.15); }
-.we-ready body.hero-dark .hero-bg-canvas { opacity: 0.34; }
+/* 背景のにじみ：黒を100%にせず、ぼかした実績カットが透けて見える程度に */
+body.hero-dark .hero-bg-canvas { filter: blur(10px) saturate(1.1) brightness(0.9); }
+.we-ready body.hero-dark .hero-bg-canvas { opacity: 0.55; }
+/* 文字の可読性確保：中央をわずかに落とす */
+body.hero-dark .hero-sec::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.35), rgba(0,0,0,0) 70%);
+  pointer-events: none;
+}
 /* 黒地の上で画像の縁を締める */
 body.hero-dark .hero-area .hero-image {
   outline: 1px solid rgba(255, 255, 255, 0.08);
@@ -22,9 +31,6 @@ body.hero-dark .hero-area .cred { color: #9a9a9a; }
 body.hero-dark .scroll-wrapper .scroll { color: #ffffff; }
 body.hero-dark .scroll .ic { color: var(--key-color); }
 
-/* ヒーロー内の進捗レール・下線色 */
-body.hero-dark .hero-sec::before,
-body.hero-dark .hero-sec::after { background-color: rgba(255, 255, 255, 0.18); }
 
 /* 右端固定UI：ヒーローが画面を占めている間だけ白抜きに反転（JSで html.on-dark を付与） */
 .fixed-right .contact-link a,
