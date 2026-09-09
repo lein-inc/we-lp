@@ -1762,7 +1762,7 @@ footer .f-copy {
 
   /* 2026-09-10 追加FB */
   .hero-area .text { font-size: 16px; }                 /* 見出しを少し小さく */
-  .hero-area .key-phrase { font-size: 10px; }           /* 英字キャッチを少し小さく */
+  .hero-area .key-phrase { font-size: 9px; }            /* 英字キャッチを小さく */
   .section-title { left: 10px; }                        /* 縦文字を少し左に */
   .scroll { left: 12px; }
   .js-rail-section::before, .js-rail-section::after { left: 15.5px; } /* 見出し中心に追従 */
