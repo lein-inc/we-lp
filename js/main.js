@@ -546,14 +546,21 @@
   if (lnav && contactLink) {
     const syncNavWidth = () => {
       if (window.matchMedia('(1050px <= width)').matches) {
-        contactLink.style.setProperty('--nav-w', Math.round(lnav.getBoundingClientRect().width) + 'px');
+        const r = lnav.getBoundingClientRect();
+        contactLink.style.setProperty('--nav-w', r.width.toFixed(2) + 'px');
+        contactLink.style.setProperty('--nav-right', (document.documentElement.clientWidth - r.right).toFixed(2) + 'px');
       } else {
         contactLink.style.removeProperty('--nav-w');
+        contactLink.style.removeProperty('--nav-right');
       }
     };
     syncNavWidth();
     window.addEventListener('resize', syncNavWidth);
+    window.addEventListener('load', syncNavWidth);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncNavWidth);
+    if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone', syncNavWidth);
+    if (typeof ResizeObserver === 'function') new ResizeObserver(syncNavWidth).observe(lnav); // フォント差替・ズーム等でナビ幅が変わっても追従
+    setTimeout(syncNavWidth, 1500); setTimeout(syncNavWidth, 4000);
   }
 
   // 右下固定UI：コンタクトセクション到達で非表示（ロゴは残す）
