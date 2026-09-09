@@ -548,13 +548,14 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 ----------------------------------------------------*/
 .js-rail-section { --rail-progress: 0%; --rail-offset: 40px; }
 @media (1050px <= width) {
+  /* 一回り小さく（FB 2026-09-09）: 線幅 0.8→0.5px、下端をセクション末尾から 40px 手前で止める */
   .js-rail-section::before {
     content: "";
     position: absolute;
     left: 56.5px;
     top: var(--rail-offset);
-    bottom: 0;
-    width: 0.8px;
+    bottom: var(--rail-end, 40px);
+    width: 0.5px;
     background-color: rgba(150, 150, 150, 0.2);
   }
   .js-rail-section::after {
@@ -562,8 +563,9 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
     position: absolute;
     left: 56.5px;
     top: var(--rail-offset);
-    width: 0.8px;
+    width: 0.5px;
     height: var(--rail-progress);
+    max-height: calc(100% - var(--rail-offset) - var(--rail-end, 40px));
     background-color: var(--main-font-color);
     transition: height 0.1s linear;
   }
