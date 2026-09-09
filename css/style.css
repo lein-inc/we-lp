@@ -468,7 +468,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   font-size: 11px;
   color: var(--en-black);
   letter-spacing: 0.24em;
-  line-height: 1;
+  line-height: calc(1em + 2px); /* 2行に折り返した時の行間は2px */
 }
 .hero-area .message {
   grid-column: 1 / -1;
@@ -1593,22 +1593,30 @@ footer .f-copy {
   }
   .section-title.vertical-writing { letter-spacing: 0.16em; line-height: 1.85; }
 
-  /* ヒーロー：縦書き2行を両方表示（block+brで新カラム化） */
+  /* ヒーロー（SP）：見出しはサムネイルの上に横書き（FB 2026-09-10） */
   .hero-area .text {
     display: block;
-    grid-column: 1 / span 2;
+    grid-column: 1 / -1;
+    grid-row: 1;
     height: auto;
-    font-size: 16px;
-    letter-spacing: 0.34em;
-    line-height: 1.85em;
-    padding-block: 6px 0;
-    align-self: center;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    line-height: 1.7;
+    text-align: left;
+    padding-block: 0;
+    margin-bottom: 18px;
+    align-self: end;
   }
   .hero-area .text > span { display: inline; flex-basis: auto; }
   .hero-area .hero-image {
-    grid-column: 3 / span 3;
+    grid-column: 1 / -1;
+    grid-row: 2;
     align-self: center;
   }
+  .hero-area .key-phrase { margin-top: 24px; }
 
   /* コンタクトフォーム内側：左ガター分を吸収して幅確保 */
   .contact-sec .contact-inner { grid-column: 1 / -1; }
