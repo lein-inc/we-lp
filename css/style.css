@@ -282,7 +282,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   color: #fff;
   padding: 6px 10px;   /* 「実績映像を見たい方はこちら」(.nda .more a) と同サイズ・同高さ */
   font-size: 12px;
-  line-height: inherit;
+  line-height: 1.8334;
   gap: 0 6px;
 }
 .fixed-right .contact-link a .text::after { display: none; }
@@ -1778,6 +1778,7 @@ footer .f-copy {
   .contact-lead, .privacy-hint, .clients-lead { font-size: 10px; line-height: 1.75; }
   .zero-content p + p { margin-top: 14px; }
   .zero-content p { font-size: 12px; line-height: 1.9; } /* reason-lead と同じ級数・行間（FB） */
+  .reason-note .strong { line-height: 1.7; margin-top: 16px; } /* 行間ひろすぎ→詰め */
   .faq-list summary { font-size: 12px; }              /* FAQ の Q を少し下げ */
   /* 長い見出しが2列に折れて本文と重なるのを防ぐ（Safari は nowrap だけでは abspos 縦書きの高さが縮むため inline-size も明示） */
   .section-title {
@@ -1865,7 +1866,7 @@ footer .f-copy {
     color: #fff;
     padding: 6px 10px;
     font-size: 12px;
-    line-height: inherit;
+    line-height: 1.8334;
     letter-spacing: 0.02em;
   }
   .sp-menu-contact a .text { border-bottom: 0 none; }
@@ -1878,4 +1879,40 @@ footer .f-copy {
   .fixed-right .contact-link { right: 20px; }
   /* ヒーロー説明文の級数を抑える */
   .hero-area .message { font-size: 11px; }
+}
+
+/* 大型スマホ（iPhone Pro Max 等、幅400px以上）：全体の級数を +1px（FB 2026-09-10「全体的に少し小さい」）
+----------------------------------------------------*/
+@media (400px <= width < 1050px) {
+  body { font-size: 13px; }
+  .hero-area .text { font-size: 17px; }
+  .hero-area .key-phrase { font-size: 10px; }
+  .hero-area .message { font-size: 12px; }
+  .hero-area .cred { font-size: 11px; }
+  .section-title { font-size: 12px; }
+  .sec-en { font-size: 11px; }
+  .problem-lead, .works-lead, .reason-lead, .pricing-lead, .zero-content p { font-size: 13px; }
+  .problem-list h3 { font-size: 14px; }
+  .works-track figcaption b { font-size: 14px; }
+  .works-type { font-size: 11px; }
+  .nda p:first-of-type { font-size: 16px; }
+  .reason-item h3, .flow-list h3 { font-size: 16px; }
+  .reason-note .strong { font-size: 16px; }
+  .pricing-item dt { font-size: 14px; }
+  .faq-list summary { font-size: 13px; }
+  .contact-heading { font-size: 17px; }
+  .zero-content p,
+  .problem-list p, .reason-item p, .reason-note p,
+  .flow-list li > div > p, .flow-note p,
+  .pricing-item dd, .faq-list details p, .nda p:not(:first-of-type),
+  .contact-lead, .privacy-hint, .clients-lead { font-size: 11px; }
+  .zero-content p { font-size: 13px; }
+  .clients-note { font-size: 10px; }
+  .privacy-box { font-size: 10px; }
+  .privacy-box h5 { font-size: 10.5px; }
+  .privacy-consent { font-size: 12px; }
+  .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { font-size: 13px; }
+  .fixed-right .contact-link a, .sp-menu-contact a, .nda .more a { font-size: 13px; }
+  .sp-menu-list a { font-size: 17px; }
+  footer .f-copy { font-size: 11px; }
 }
