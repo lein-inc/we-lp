@@ -548,14 +548,13 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 ----------------------------------------------------*/
 .js-rail-section { --rail-progress: 0%; --rail-offset: 40px; }
 @media (1050px <= width) {
-  /* 一回り小さく（FB 2026-09-09）: 線幅 0.8→0.5px、下端をセクション末尾から 40px 手前で止める */
   .js-rail-section::before {
     content: "";
     position: absolute;
     left: 56.5px;
     top: var(--rail-offset);
-    bottom: var(--rail-end, 40px);
-    width: 0.5px;
+    bottom: 0;
+    width: 0.8px;
     background-color: rgba(150, 150, 150, 0.2);
   }
   .js-rail-section::after {
@@ -563,9 +562,8 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
     position: absolute;
     left: 56.5px;
     top: var(--rail-offset);
-    width: 0.5px;
+    width: 0.8px;
     height: var(--rail-progress);
-    max-height: calc(100% - var(--rail-offset) - var(--rail-end, 40px));
     background-color: var(--main-font-color);
     transition: height 0.1s linear;
   }
@@ -1688,14 +1686,14 @@ footer .f-copy {
 /* コンタクト：リード文下の実績モザイクビジュアル（ヒーローのスライドショーを流用） */
 .contact-visual {
   position: relative;
-  max-width: 415px;
+  max-width: 300px;
   aspect-ratio: 16 / 9;
-  margin: -16px auto 48px;
+  margin: -12px auto 44px;
   overflow: hidden;
   background-color: #111;
 }
 @media (1050px <= width) {
-  .contact-visual { max-width: 720px; margin-top: -8px; margin-bottom: 64px; }
+  .contact-visual { max-width: 480px; margin-top: -4px; margin-bottom: 60px; }
 }
 .contact-visual img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .contact-visual .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
