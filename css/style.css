@@ -1799,9 +1799,6 @@ footer .f-copy {
   .contact-sec .form-group:not(:last-of-type) { margin-bottom: 14px; }
   .contact-sec button[type="submit"], .confirm-actions button { padding: 14px 16px; }
 
-  /* Weロゴ：通常は非表示、コンタクト到達（.hide-fixed-ui）で表示 */
-  .fixed-right .logo-area { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; }
-  .hide-fixed-ui .fixed-right .logo-area { opacity: 1; visibility: visible; }
 }
 
 /* SP：ハンバーガーメニュー
@@ -1932,3 +1929,7 @@ footer .f-copy {
 .fixed-right .contact-link a:hover .ic-noborder svg { transform: rotate(90deg) translateX(3px) rotateX(360deg); }
 /* ハンバーガー内の問い合わせは矢印なし */
 .sp-menu-contact a .ic-noborder { display: none; }
+
+/* Weロゴ（右下）：PC/SP とも通常は非表示、お問い合わせブロック到達（.hide-fixed-ui）で表示（FB 2026-09-10） */
+.fixed-right .logo-area { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; }
+.hide-fixed-ui .fixed-right .logo-area { opacity: 1; visibility: visible; }
