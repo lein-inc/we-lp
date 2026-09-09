@@ -1760,6 +1760,25 @@ footer .f-copy {
   .contact-heading { font-size: 16px; }
   .reason-note, .flow-note, .contact-lead { text-align: left; }
 
+  /* 2026-09-10 追加FB */
+  .hero-area .text { font-size: 16px; }                 /* 見出しを少し小さく */
+  .hero-area .key-phrase { font-size: 10px; }           /* 英字キャッチを少し小さく */
+  .section-title { left: 10px; }                        /* 縦文字を少し左に */
+  .scroll { left: 12px; }
+  .js-rail-section::before, .js-rail-section::after { left: 15.5px; } /* 見出し中心に追従 */
+  section:not(.hero-sec) > .grid-10, .contact-sec .container > .grid-10 { padding-inline-start: 40px; }
+  /* 3段ロゴ：行間を詰め、段間のラインなし */
+  .marquee-track a { height: 72px; padding: 16px 24px; }
+  .marquee-row + .marquee-row { border-top: 0 none; }
+  /* 本文系：3pt下げ・行間詰め */
+  .zero-content p,
+  .problem-list p, .reason-item p, .reason-note p,
+  .flow-list li > div > p, .flow-note p,
+  .pricing-item dd, .faq-list details p, .nda p:not(:first-of-type),
+  .contact-lead, .privacy-hint, .clients-lead { font-size: 10px; line-height: 1.75; }
+  .zero-content p + p { margin-top: 14px; }
+  .faq-list summary { font-size: 12px; }              /* FAQ の Q を少し下げ */
+
   /* Weロゴ：通常は非表示、コンタクト到達（.hide-fixed-ui）で表示 */
   .fixed-right .logo-area { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; }
   .hide-fixed-ui .fixed-right .logo-area { opacity: 1; visibility: visible; }
