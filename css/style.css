@@ -280,10 +280,10 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 .fixed-right .contact-link a {
   background-color: #000;
   color: #fff;
-  padding: 4px 8px;
-  font-size: 10px;
+  padding: 6px 10px;   /* 「実績映像を見たい方はこちら」(.nda .more a) と同サイズ */
+  font-size: 12px;
   line-height: 1.4;
-  gap: 0 5px;
+  gap: 0 6px;
 }
 .fixed-right .contact-link a .text::after { display: none; }
 .fixed-right .contact-link a:hover { color: #fff; opacity: 0.75; }
@@ -1677,7 +1677,7 @@ footer .f-copy {
   .section-title { font-size: 16px; }
   .sec-en { font-size: 12px; }
   .ic-link { font-size: 14px; }
-  .fixed-right .contact-link a { font-size: 11px; }
+  .fixed-right .contact-link a { font-size: 14px; }
   .lnav-list a { font-size: 11px; }
   .hero-area .key-phrase { font-size: 12px; }
   .hero-area .message { font-size: 16px; }
@@ -1863,8 +1863,8 @@ footer .f-copy {
     gap: 0 5px;
     background-color: #000;
     color: #fff;
-    padding: 4px 8px;
-    font-size: 10px;
+    padding: 6px 10px;
+    font-size: 12px;
     line-height: 1.4;
     letter-spacing: 0.02em;
   }
