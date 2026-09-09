@@ -1777,6 +1777,7 @@ footer .f-copy {
   .pricing-item dd, .faq-list details p, .nda p:not(:first-of-type),
   .contact-lead, .privacy-hint, .clients-lead { font-size: 10px; line-height: 1.75; }
   .zero-content p + p { margin-top: 14px; }
+  .zero-content p { font-size: 12px; line-height: 1.9; } /* reason-lead と同じ級数・行間（FB） */
   .faq-list summary { font-size: 12px; }              /* FAQ の Q を少し下げ */
   .section-title { white-space: nowrap; }             /* 長い見出しが2列に折れて本文と重なるのを防ぐ */
   /* プライバシーポリシー本文を小さく */
