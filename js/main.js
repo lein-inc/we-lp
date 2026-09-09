@@ -540,6 +540,22 @@
     }
   }
 
+  // PC：右下「お問い合わせはこちら」の幅をローカルナビ（よくある質問〜実績）の幅に揃える
+  const lnav = document.querySelector('.lnav-list');
+  const contactLink = document.querySelector('.fixed-right .contact-link');
+  if (lnav && contactLink) {
+    const syncNavWidth = () => {
+      if (window.matchMedia('(1050px <= width)').matches) {
+        contactLink.style.setProperty('--nav-w', Math.round(lnav.getBoundingClientRect().width) + 'px');
+      } else {
+        contactLink.style.removeProperty('--nav-w');
+      }
+    };
+    syncNavWidth();
+    window.addEventListener('resize', syncNavWidth);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncNavWidth);
+  }
+
   // 右下固定UI：コンタクトセクション到達で非表示（ロゴは残す）
   const contactSec = document.getElementById('contact');
   if (contactSec && typeof IntersectionObserver === 'function') {

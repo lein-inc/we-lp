@@ -282,7 +282,9 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   line-height: 1.4;
 }
 @media (1050px <= width) {
-  .fixed-right .contact-link { right: 110px; bottom: 54px; }
+  /* ナビ（よくある質問〜実績）と右端・幅を揃える（幅は JS が --nav-w に計測値を入れる） */
+  .fixed-right .contact-link { right: 50px; bottom: 54px; }
+  .fixed-right .contact-link a { width: var(--nav-w, auto); justify-content: space-between; box-sizing: border-box; white-space: nowrap; font-size: 13px; letter-spacing: 0; }
 }
 .fixed-right .contact-link a {
   background-color: #000;
@@ -1681,7 +1683,6 @@ footer .f-copy {
   .section-title { font-size: 16px; }
   .sec-en { font-size: 12px; }
   .ic-link { font-size: 14px; }
-  .fixed-right .contact-link a { font-size: 14px; }
   .lnav-list a { font-size: 11px; }
   .hero-area .key-phrase { font-size: 12px; }
   .hero-area .message { font-size: 16px; }
