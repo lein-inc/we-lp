@@ -1922,3 +1922,11 @@ footer .f-copy {
 /* 縦見出しの文字変換アニメーション */
 .section-title .st-ch { display: inline; transition: color 0.25s ease, opacity 0.25s ease; }
 .section-title.is-scrambling .st-ch:not(.is-set) { color: var(--sub-gray); opacity: 0.55; }
+
+/* 黒ボタン共通：矢印は下向き（FB 2026-09-10）。hover は下へ3px進む */
+.nda .more a .ic-noborder svg,
+.fixed-right .contact-link a .ic-noborder svg { transform: rotate(90deg); }
+.nda .more a:hover .ic-noborder svg,
+.fixed-right .contact-link a:hover .ic-noborder svg { transform: rotate(90deg) translateX(3px) rotateX(360deg); }
+/* ハンバーガー内の問い合わせは矢印なし */
+.sp-menu-contact a .ic-noborder { display: none; }
