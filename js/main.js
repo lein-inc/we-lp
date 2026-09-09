@@ -314,6 +314,70 @@
     }
   }
 
+  // 縦見出し：表示範囲に入ったら文字が変換されながら確定するアニメーション（FB 2026-09-10）
+  (function initTitleScramble() {
+    const titles = document.querySelectorAll('.section-title');
+    if (!titles.length) return;
+    const POOL = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン映像節目記憶光影時間設計物語未来会社式典';
+    const FIXED = /[、。「」・\s]/;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    titles.forEach((t) => {
+      const spans = [];
+      const wrap = (node) => {
+        Array.from(node.childNodes).forEach((n) => {
+          if (n.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            Array.from(n.textContent).forEach((ch) => {
+              const sp = document.createElement('span');
+              sp.className = 'st-ch';
+              sp.dataset.ch = ch;
+              sp.textContent = ch;
+              frag.appendChild(sp);
+              spans.push(sp);
+            });
+            n.replaceWith(frag);
+          } else if (n.nodeType === 1) {
+            wrap(n);
+          }
+        });
+      };
+      wrap(t);
+      if (reduce || typeof IntersectionObserver !== 'function') return;
+      t.classList.add('is-scrambling');
+      spans.forEach((sp) => { if (!FIXED.test(sp.dataset.ch)) sp.textContent = POOL[Math.floor(Math.random() * POOL.length)]; });
+      let started = false;
+      const run = () => {
+        if (started) return; started = true;
+        const t0 = performance.now();
+        const STEP = 55;   // 1文字ごとの確定間隔
+        const LEAD = 250;  // 最初の文字が確定するまで
+        let last = 0;
+        const tick = (now) => {
+          const el = now - t0;
+          let pending = false;
+          spans.forEach((sp, i) => {
+            if (sp.classList.contains('is-set')) return;
+            const fixedChar = FIXED.test(sp.dataset.ch);
+            if (fixedChar || el >= LEAD + i * STEP) {
+              sp.textContent = sp.dataset.ch;
+              sp.classList.add('is-set');
+            } else {
+              pending = true;
+              if (now - last > 60) sp.textContent = POOL[Math.floor(Math.random() * POOL.length)];
+            }
+          });
+          if (now - last > 60) last = now;
+          if (pending) requestAnimationFrame(tick); else t.classList.remove('is-scrambling');
+        };
+        requestAnimationFrame(tick);
+      };
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { run(); io.disconnect(); } });
+      }, { threshold: 0.15 });
+      io.observe(t);
+    });
+  })();
+
   // 本文要素全体にスクロール時フェードインを付与（FB 2026-09-10）。既存の .js-active に加える
   ['.clients-marquee', '.clients-note', '.flow-list > li', '.pricing-list > .pricing-item', '.faq-list > details',
    '.contact-heading', '.contact-visual', '.contact-sec form', 'footer .f-copy']

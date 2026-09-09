@@ -1918,3 +1918,7 @@ footer .f-copy {
   .sp-menu-list a { font-size: 17px; }
   footer .f-copy { font-size: 11px; }
 }
+
+/* 縦見出しの文字変換アニメーション */
+.section-title .st-ch { display: inline; transition: color 0.25s ease, opacity 0.25s ease; }
+.section-title.is-scrambling .st-ch:not(.is-set) { color: var(--sub-gray); opacity: 0.55; }
