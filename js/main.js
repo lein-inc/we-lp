@@ -348,9 +348,21 @@
       privacyBox.addEventListener('scroll', checkScrolled, { passive: true });
       checkScrolled(); // 内容がボックスに収まる場合は即解禁
       window.addEventListener('resize', checkScrolled);
-      privacyAgree.addEventListener('change', () => {
-        submitBtn.disabled = !privacyAgree.checked;
-      });
+      // 必須項目がすべて有効＋確認用メール一致＋同意チェック で初めて押せる（FB 2026-09-09）
+      const requiredFields = form.querySelectorAll('input[required], select[required]');
+      const isFieldOk = (input) => {
+        let ok = input.value.trim() !== '' && input.checkValidity();
+        if (ok && input.id === 'emailConfirm') ok = input.value.trim() === form.querySelector('#email').value.trim();
+        return ok;
+      };
+      const updateSubmitState = () => {
+        const allOk = Array.from(requiredFields).every(isFieldOk);
+        submitBtn.disabled = !(allOk && privacyAgree.checked);
+      };
+      form.addEventListener('input', updateSubmitState);
+      form.addEventListener('change', updateSubmitState);
+      privacyAgree.addEventListener('change', updateSubmitState);
+      updateSubmitState();
     }
 
     form.addEventListener('submit', (e) => {

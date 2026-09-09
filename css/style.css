@@ -420,7 +420,9 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
     align-items: flex-start;
     align-content: flex-start;
     justify-content: flex-start;
-    font-size: 24px;
+    /* 列の高さ＝隣の16:9画像の高さ。9文字×(1+0.42)em が収まるよう vw 連動で上限24px（2026-09-09 折返し修正） */
+    font-size: min(24px, calc(1.705vw - 3px));
+    white-space: nowrap;
     margin-left: 0;
     height: 100%;
     z-index: 2;
@@ -1676,3 +1678,7 @@ footer .f-copy {
   .contact-thanks p:first-of-type { font-size: 18px; }
   footer .f-copy { font-size: 11px; }
 }
+
+/* PC限定改行（FB 2026-09-09） */
+.pc-br { display: none; }
+@media (1050px <= width) { .pc-br { display: inline; } }
