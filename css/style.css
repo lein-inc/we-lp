@@ -282,17 +282,18 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   line-height: 1.4;
 }
 @media (1050px <= width) {
-  /* ナビ（よくある質問〜実績）と右端・幅を揃える（幅は JS が --nav-w に計測値を入れる） */
+  /* ナビ（よくある質問〜実績）と右端を揃える。文言が長い場合は max-content で左に伸ばす */
   .fixed-right .contact-link { right: var(--nav-right, 50px); bottom: 54px; }
-  .fixed-right .contact-link a { width: var(--nav-w, auto); justify-content: space-between; box-sizing: border-box; white-space: nowrap; font-size: 13px; letter-spacing: 0; }
+  .fixed-right .contact-link a { min-width: var(--nav-w, auto); width: max-content; justify-content: space-between; box-sizing: border-box; white-space: nowrap; font-size: 14px; letter-spacing: 0; }
 }
+/* CTAは具体的な文言＋分厚く（MTG 2026-09-10「ここは重要」）
+   font-size は .ic-link（SP12/PC14）と下のSPブロック（13px）に委譲 */
 .fixed-right .contact-link a {
   background-color: #000;
   color: #fff;
-  padding: 6px 10px;   /* 「実績映像を見たい方はこちら」(.nda .more a) と同サイズ・同高さ */
-  font-size: 12px;
+  padding: 11px 16px;
   line-height: 1.8334;
-  gap: 0 6px;
+  gap: 0 10px;
 }
 .fixed-right .contact-link a .text::after { display: none; }
 .fixed-right .contact-link a:hover { color: #fff; opacity: 0.75; }
@@ -859,11 +860,10 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
-}
-.marquee-track li { flex: 0 0 auto; }
-.marquee-track a {
+/* reduced-motion 環境でもロゴの流れは止めない（SANDO氏環境で「動かない」報告 2026-09-10。
+   OSの「視差効果を減らす」設定で animation が全停止していたのが原因の最有力） */
+.marquee-track li {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -873,25 +873,19 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   background-color: #fff;
 }
 @media (1050px <= width) {
-  .marquee-track a {
+  .marquee-track li {
     width: 230px;
     height: 138px;
     padding: 36px 44px;
   }
 }
+/* ロゴはカラー常時表示・リンクなし（MTG 2026-09-10） */
 .marquee-track img {
   max-width: 100%;
   max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: grayscale(1);
-  opacity: 0.75;
-  transition: filter 0.4s ease, opacity 0.4s ease;
-}
-.marquee-track a:hover img {
-  filter: grayscale(0);
-  opacity: 1;
 }
 .clients-note {
   grid-column: 1 / -1;
@@ -1588,39 +1582,28 @@ footer .f-copy {
   footer .f-copy { grid-column: 1 / span 5; }
 }
 
-/* SP最適化（縦書きセクションタイトルの左ガター確保、ヒーロー2列縦書き、他）
+/* SP最適化（見出しは横書きでブロックのフックに、ヒーロー2列縦書き、他）
 ----------------------------------------------------*/
 @media (width < 1050px) {
-  /* 縦書きセクションタイトルのための左ガターを本文側に確保 */
-  section:not(.hero-sec) > .grid-10,
-  .contact-sec .container > .grid-10 {
-    padding-inline-start: 44px;
+  /* SP は縦書き演出をやめ、横書き見出しを大きく（MTG 2026-09-10「横でいい、シンプルでいい」） */
+  .section-title,
+  .section-title.vertical-writing {
+    position: static;
+    float: none;
+    width: auto;
+    inline-size: auto;
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    white-space: normal;
+    font-size: 19px;
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+    margin: 0;
+    padding: 0 var(--grid-gap) 20px;
   }
-  .section-title {
-    font-size: 11px;
-    top: 32px;
-    margin-left: 14px;
-    margin-right: -14px;
-    margin-top: -8px; /* padding-top 40px → 見出し開始 32px */
-  }
-  .section-title.vertical-writing { letter-spacing: 0.16em; line-height: 1.85; }
-  /* SP 縦ライン（見出しの中心 14px + 11px/2 ≒ 19.5px） */
-  .js-rail-section { --rail-offset: 32px; }
-  .contact-sec { --rail-offset: 100px; }
-  /* 線の長さは見出し文字の縦幅（JS が --rail-len / --rail-fill を px で更新） */
-  /* SP の縦ラインは見出し（sticky）に付けて一緒に追従させる。長さ＝見出しの文字の縦幅 */
+  .contact-sec .section-title { margin-top: 0; top: auto; }
+  /* PC用の縦ライン（レール）は SP では描かない */
   .js-rail-section::before, .js-rail-section::after { content: none; }
-  .js-rail-section .section-title { position: sticky; }
-  .js-rail-section .section-title::before,
-  .js-rail-section .section-title::after {
-    content: "";
-    position: absolute;
-    left: -3px; /* 文字の左側（文字に重ねない） */
-    top: 0;
-    width: 0.8px;
-  }
-  .js-rail-section .section-title::before { height: 100%; background-color: rgba(150, 150, 150, 0.2); }
-  .js-rail-section .section-title::after { height: var(--rail-fill, 0px); background-color: var(--main-font-color); transition: height 0.1s linear; }
 
   /* ヒーロー（SP）：見出しはサムネイルの上部に縦書き2列（FB 2026-09-10） */
   .hero-area .text {
@@ -1650,18 +1633,16 @@ footer .f-copy {
   }
   .hero-area .key-phrase { margin-top: 24px; }
 
-  /* コンタクトフォーム内側：左ガター分を吸収して幅確保 */
+  /* コンタクトフォーム内側：全幅確保 */
   .contact-sec .contact-inner { grid-column: 1 / -1; }
-
-  /* 実績カルーセルはガター内側の overflow: hidden を活かす */
-  .works-carousel { margin-inline-start: -8px; }
 }
 
 /* reduced motion
 ----------------------------------------------------*/
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after {
+  /* .marquee-track（ロゴの流れ）は除外：コンテンツ表示に必要な動きのため止めない */
+  *:not(.marquee-track), *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -1746,60 +1727,80 @@ footer .f-copy {
   .f-sep { display: none; }
 }
 
-/* SP：級数を少し抑える・note類は左頭流し込み・Weロゴは問い合わせ到達時のみ（FB 2026-09-10）
+/* SP：文字を大きく・横線削減・ブロック詰め（MTG 2026-09-10）
 ----------------------------------------------------*/
 @media (width < 1050px) {
-  .problem-lead, .works-lead, .reason-lead, .pricing-lead { font-size: 12px; line-height: 1.9; }
-  .clients-note { font-size: 9px; line-height: 1.8; }
-  .problem-list h3 { font-size: 13px; }
-  .works-track figcaption b { font-size: 13px; }
-  .nda p:first-of-type { font-size: 15px; }
-  .reason-item h3 { font-size: 15px; }
-  .reason-note p { font-size: 12px; }
-  .reason-note .strong { font-size: 15px; }
-  .zero-content p { font-size: 13px; }
-  .flow-list h3 { font-size: 15px; }
-  .flow-note p { font-size: 13px; }
-  .pricing-item dt { font-size: 13px; }
-  .faq-list summary { font-size: 13px; }
-  .contact-heading { font-size: 16px; }
+  /* リード・見出し系を1〜2px アップ（「SPはもっと文字大きくていい」） */
+  .problem-lead, .works-lead, .reason-lead, .pricing-lead { font-size: 14px; line-height: 1.95; }
+  .clients-note { font-size: 10px; line-height: 1.8; }
+  .problem-list h3 { font-size: 15px; }
+  .works-track figcaption b { font-size: 14px; }
+  .nda p:first-of-type { font-size: 16px; }
+  .reason-item h3 { font-size: 16px; }
+  .reason-note p { font-size: 13px; }
+  .reason-note .strong { font-size: 16px; }
+  .flow-list h3 { font-size: 16px; }
+  .flow-note p { font-size: 14px; }
+  .pricing-item dt { font-size: 14px; }
+  .faq-list summary { font-size: 14px; }
+  .contact-heading { font-size: 18px; }
+  .sec-en { font-size: 11px; }
   .reason-note, .flow-note, .contact-lead { text-align: left; }
 
-  /* 2026-09-10 追加FB */
-  .hero-area .text { font-size: 16px; }                 /* 見出しを少し小さく */
-  .hero-area .key-phrase { font-size: 9px; }            /* 英字キャッチを小さく */
-  .section-title { margin-left: 10px; margin-right: -10px; } /* 縦文字を少し左に */
+  .hero-area .text { font-size: 16px; }
+  .hero-area .key-phrase { font-size: 10px; }
   .scroll { left: 12px; }
-  section:not(.hero-sec) > .grid-10, .contact-sec .container > .grid-10 { padding-inline-start: 40px; }
   /* 3段ロゴ：行間を詰め、段間のラインなし */
-  .marquee-track a { height: 72px; padding: 16px 24px; }
+  .marquee-track li { height: 72px; padding: 16px 24px; }
   .marquee-row + .marquee-row { border-top: 0 none; }
-  /* 本文系：3pt下げ・行間詰め */
+  /* 本文系：12px（旧10pxから引き上げ） */
   .zero-content p,
   .problem-list p, .reason-item p, .reason-note p,
   .flow-list li > div > p, .flow-note p,
   .pricing-item dd, .faq-list details p, .nda p:not(:first-of-type),
-  .contact-lead, .privacy-hint, .clients-lead { font-size: 10px; line-height: 1.75; }
+  .contact-lead, .privacy-hint, .clients-lead { font-size: 12px; line-height: 1.85; }
   .zero-content p + p { margin-top: 14px; }
-  .zero-content p { font-size: 12px; line-height: 1.9; } /* reason-lead と同じ級数・行間（FB） */
-  .reason-note .strong { line-height: 1.7; margin-top: 16px; } /* 行間ひろすぎ→詰め */
-  .faq-list summary { font-size: 12px; }              /* FAQ の Q を少し下げ */
-  /* 長い見出しが2列に折れて本文と重なるのを防ぐ（Safari は nowrap だけでは abspos 縦書きの高さが縮むため inline-size も明示） */
-  .section-title {
-    white-space: nowrap;
-    inline-size: max-content;
-    max-height: none;
-    overflow: visible;
-  }
-  /* プライバシーポリシー本文を小さく */
-  .privacy-box { font-size: 9px; line-height: 1.75; height: 150px; padding: 10px 12px; }
-  .privacy-box h5 { font-size: 9.5px; margin: 10px 0 2px; }
-  .privacy-consent { font-size: 11px; }
-  /* フォーム入力欄の高さを抑える */
-  .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { padding: 0.65em 0.9em; font-size: 12px; margin-top: 6px; }
+  .zero-content p { font-size: 14px; line-height: 1.95; } /* リードと同じ級数・行間 */
+  .reason-note .strong { line-height: 1.7; margin-top: 16px; }
+  /* プライバシーポリシー */
+  .privacy-box { font-size: 10px; line-height: 1.75; height: 150px; padding: 10px 12px; }
+  .privacy-box h5 { font-size: 10.5px; margin: 10px 0 2px; }
+  .privacy-consent { font-size: 12px; }
+  /* フォーム入力欄 */
+  .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { padding: 0.7em 0.9em; font-size: 13px; margin-top: 6px; }
   .contact-sec .form-group:not(:last-of-type) { margin-bottom: 14px; }
   .contact-sec button[type="submit"], .confirm-actions button { padding: 14px 16px; }
 
+  /* 横線を減らす（「横線が多くて見づらい」）：外周線をなくし、区切り線は薄いグレーに */
+  .problem-list .item > div::before,
+  .reason-item::before, .reason-item::after,
+  .flow-list li::before, .flow-list li::after,
+  .pricing-item::before, .pricing-item::after { background: var(--line-gray); }
+  .problem-list .item > div::after { content: none; }
+  .problem-list .item:first-of-type > div::before { content: none; }
+  .reason-item:first-child::before,
+  .flow-list li:first-child::before,
+  .pricing-item:first-child::before { content: none; }
+  .reason-item:last-child::after,
+  .flow-list li:last-child::after,
+  .pricing-item:last-child::after { content: none; }
+  .clients-marquee { border-top: 0 none; border-bottom: 0 none; }
+
+  /* ブロックの詰め（「もうちょっと詰めないとSP版は見れない」） */
+  .problem-sec, .clients-sec { margin-top: 48px; }
+  .works-sec { margin-top: 64px; }
+  .reason-sec, .zero-sec, .flow-sec, .pricing-sec, .faq-sec { margin-top: 56px; }
+  .contact-sec { margin-top: 64px; }
+  .problem-list { margin-top: 32px; }
+  .problem-list .item > div { padding: 24px 0; }
+  .reason-list { margin-top: 36px; }
+  .reason-item { padding: 28px 0; }
+  .flow-list li { padding: 24px 0; }
+  .pricing-list { margin-top: 32px; }
+  .pricing-item { padding: 20px 0; }
+  .works-carousel { margin-top: 32px; }
+  .nda { margin-top: 48px; }
+  .reason-note, .flow-note { margin-top: 40px; }
 }
 
 /* SP：ハンバーガーメニュー
@@ -1864,8 +1865,8 @@ footer .f-copy {
     gap: 0 5px;
     background-color: #000;
     color: #fff;
-    padding: 6px 10px;
-    font-size: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
     line-height: 1.8334;
     letter-spacing: 0.02em;
   }
@@ -1875,11 +1876,10 @@ footer .f-copy {
   .sp-menu-logo { position: absolute; right: 20px; bottom: 25px; margin: 0; }
   .sp-menu-logo img { display: block; width: 42px; height: auto; }
 
-  /* 右下の問い合わせバナーは右揃え（Weロゴは問い合わせ到達時のみなので余白不要）・一回り大きく */
+  /* 右下の問い合わせバナーは右揃え・分厚く（MTG 2026-09-10） */
   .fixed-right .contact-link { right: 20px; }
-  .fixed-right .contact-link a { font-size: 13px; padding: 8px 14px; }
-  /* ヒーロー説明文の級数を抑える */
-  .hero-area .message { font-size: 11px; }
+  .fixed-right .contact-link a { font-size: 13px; padding: 12px 16px; }
+  .hero-area .message { font-size: 12px; }
 }
 
 /* 大型スマホ（iPhone Pro Max 等、幅400px以上）：全体の級数を +1px（FB 2026-09-10「全体的に少し小さい」）
@@ -1887,33 +1887,34 @@ footer .f-copy {
 @media (400px <= width < 1050px) {
   body { font-size: 13px; }
   .hero-area .text { font-size: 17px; }
-  .hero-area .key-phrase { font-size: 10px; }
-  .hero-area .message { font-size: 12px; }
+  .hero-area .key-phrase { font-size: 11px; }
+  .hero-area .message { font-size: 13px; }
   .hero-area .cred { font-size: 11px; }
-  .section-title { font-size: 12px; }
-  .sec-en { font-size: 11px; }
-  .problem-lead, .works-lead, .reason-lead, .pricing-lead, .zero-content p { font-size: 13px; }
-  .problem-list h3 { font-size: 14px; }
-  .works-track figcaption b { font-size: 14px; }
+  .section-title, .section-title.vertical-writing { font-size: 20px; }
+  .sec-en { font-size: 12px; }
+  .problem-lead, .works-lead, .reason-lead, .pricing-lead, .zero-content p { font-size: 15px; }
+  .problem-list h3 { font-size: 16px; }
+  .works-track figcaption b { font-size: 15px; }
   .works-type { font-size: 11px; }
-  .nda p:first-of-type { font-size: 16px; }
-  .reason-item h3, .flow-list h3 { font-size: 16px; }
-  .reason-note .strong { font-size: 16px; }
-  .pricing-item dt { font-size: 14px; }
-  .faq-list summary { font-size: 13px; }
-  .contact-heading { font-size: 17px; }
+  .nda p:first-of-type { font-size: 17px; }
+  .reason-item h3, .flow-list h3 { font-size: 17px; }
+  .reason-note .strong { font-size: 17px; }
+  .pricing-item dt { font-size: 15px; }
+  .faq-list summary { font-size: 15px; }
+  .contact-heading { font-size: 19px; }
   .zero-content p,
   .problem-list p, .reason-item p, .reason-note p,
   .flow-list li > div > p, .flow-note p,
   .pricing-item dd, .faq-list details p, .nda p:not(:first-of-type),
-  .contact-lead, .privacy-hint, .clients-lead { font-size: 11px; }
-  .zero-content p { font-size: 13px; }
-  .clients-note { font-size: 10px; }
-  .privacy-box { font-size: 10px; }
-  .privacy-box h5 { font-size: 10.5px; }
-  .privacy-consent { font-size: 12px; }
-  .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { font-size: 13px; }
-  .sp-menu-contact a, .nda .more a { font-size: 13px; }
+  .contact-lead, .privacy-hint, .clients-lead { font-size: 13px; }
+  .zero-content p { font-size: 15px; }
+  .clients-note { font-size: 11px; }
+  .privacy-box { font-size: 11px; }
+  .privacy-box h5 { font-size: 11.5px; }
+  .privacy-consent { font-size: 13px; }
+  .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { font-size: 14px; }
+  .nda .more a { font-size: 13px; }
+  .sp-menu-contact a { font-size: 14px; }
   .fixed-right .contact-link a { font-size: 14px; }
   .sp-menu-list a { font-size: 17px; }
   footer .f-copy { font-size: 11px; }

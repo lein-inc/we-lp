@@ -10,11 +10,11 @@ GitHub Pages: https://lein-inc.github.io/we-lp/
 
 ## 構成
 
-- `src/index.html` — 編集用の原本（A案：白ヒーロー、パスワード保護なし）
-- `src/index-b.html` — B案（ヒーロー背景黒）。A案から `<body class="hero-dark">` + `css/hero-dark.css` 読込の差分のみ。A案更新後は sed で再生成する
-- `src/index-c.html` — C案（サムネ色グラデーション背景）。A案から `<body class="hero-dark hero-gradient">` + `css/hero-dark.css` + `css/hero-gradient.css` 読込の差分のみ
-- `index.html` / `index-b.html` / `index-c.html` — staticrypt で暗号化済みの公開ファイル（A案 / B案 / C案）
-- `css/style.css`, `js/main.js`, `img/` — 共通アセット（root配下、両方から参照）
+**B案（ヒーロー黒）で一本化済み（2026-09-10 MTGで採用決定。旧A案=白/C案=グラデは廃止）**
+
+- `src/index.html` — 編集用の原本（B案：`<body class="hero-dark">` + `css/hero-dark.css`、パスワード保護なし）
+- `index.html` — staticrypt で暗号化済みの公開ファイル
+- `css/style.css`, `css/hero-dark.css`, `js/main.js`, `img/` — アセット（root配下）
 - `.staticrypt.json` — staticrypt の設定（salt）
 - `.github/workflows/pages.yml` — GitHub Pages デプロイワークフロー
 
@@ -24,8 +24,9 @@ GitHub Pages: https://lein-inc.github.io/we-lp/
 # src/index.html を編集した後、以下を実行して index.html を再暗号化
 npx staticrypt src/index.html -p 'we-lp-2026' --short -d .
 
-# 日本語ラベル差替（title / staticrypt-title / placeholder / button value）を再適用
-# 詳細は本リポジトリの index.html 参照
+# ⚠️ 生成された index.html は素のstaticrypt UI。カスタムログイン画面（白背景+黒ボタン+
+# 赤丸マーカー+日本語ラベル）を維持するには、「旧 index.html の staticryptConfig = {...}
+# の行だけを新しい値に差し替える」方式が確実（旧HTMLを保持し config 行のみ更新）。
 ```
 
 ## パスワード変更
@@ -33,5 +34,5 @@ npx staticrypt src/index.html -p 'we-lp-2026' --short -d .
 ```bash
 rm .staticrypt.json
 npx staticrypt src/index.html -p '<新パスワード>' --short -d .
-# 日本語ラベル差替を再適用
+# 上記のログイン画面カスタム維持手順を再適用
 ```
