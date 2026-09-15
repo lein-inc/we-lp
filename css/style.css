@@ -1876,9 +1876,19 @@ footer .f-copy {
   .sp-menu-logo { position: absolute; right: 20px; bottom: 25px; margin: 0; }
   .sp-menu-logo img { display: block; width: 42px; height: auto; }
 
-  /* 右下の問い合わせバナーは右揃え・分厚く（MTG 2026-09-10） */
-  .fixed-right .contact-link { right: 20px; }
-  .fixed-right .contact-link a { font-size: 13px; padding: 12px 16px; }
+  /* 下部固定CTA：横幅いっぱい・左右下に余白キープ（FB 2026-09-16） */
+  .fixed-right .contact-link { left: 20px; right: 20px; bottom: 20px; }
+  .fixed-right .contact-link a {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+    font-size: 13px;
+    padding: 12px 16px;
+  }
+  /* 「実績映像を見たい方はこちら」は差別化：枠黒・背景白・文字黒（FB 2026-09-16） */
+  .nda .more a { background-color: #fff; color: #000; border: 1px solid #000; }
+  .nda .more a:hover { color: #000; opacity: 0.7; }
   .hero-area .message { font-size: 12px; }
 }
 
