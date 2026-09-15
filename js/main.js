@@ -164,7 +164,7 @@
     let loadedCount = 0;
     names.forEach((n, i) => {
       const im = new Image();
-      im.src = 'img/works/' + n + '.webp';
+      im.src = (window.WE_ASSET_BASE || '') + 'img/works/' + n + '.webp'; // WP版はテーマURIを前置（functions.php で注入）
       const onDone = () => {
         loadedCount += 1;
         if (loadedCount === names.length) startSlideshow();
@@ -663,8 +663,7 @@
         setContactState('input');
         document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
       });
-      sendBtn.addEventListener('click', () => {
-        // 静的版：ここでは送信処理なし。WP実装時にPOST処理へ差替
+      const showThanks = () => {
         confirmBox.hidden = true;
         const thanks = document.querySelector('.contact-thanks');
         if (thanks) {
@@ -673,7 +672,46 @@
         }
         setContactState('thanks');
         document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+      };
+      const sendBtnText = sendBtn.querySelector('.text');
+      const cf7Reset = () => {
+        sendBtn.disabled = false;
+        if (sendBtnText) sendBtnText.textContent = '送信する';
+      };
+      sendBtn.addEventListener('click', () => {
+        // WP版：非表示のCF7フォーム（.cf7-bridge）へ値を写して送信。静的版はサンクス表示のみ
+        const cf7form = document.querySelector('.cf7-bridge form');
+        if (!cf7form) { showThanks(); return; }
+        const map = { company: 'company', department: 'department', name: 'your-name', nameKana: 'name-kana', timing: 'timing', budget: 'budget', email: 'your-email' };
+        Object.keys(map).forEach((src) => {
+          const s = document.getElementById(src);
+          const d = cf7form.querySelector('[name="' + map[src] + '"]');
+          if (s && d) d.value = s.value;
+        });
+        sendBtn.disabled = true;
+        if (sendBtnText) sendBtnText.textContent = '送信中…';
+        if (cf7form.requestSubmit) cf7form.requestSubmit(); else cf7form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       });
+      document.addEventListener('wpcf7mailsent', () => {
+        if (window.dataLayer) window.dataLayer.push({ event: 'contact_form_submit' });
+        cf7Reset();
+        showThanks();
+      });
+      const cf7Fail = () => {
+        cf7Reset();
+        alert('送信に失敗しました。お手数ですが、時間をおいて再度お試しください。');
+      };
+      document.addEventListener('wpcf7mailfailed', cf7Fail);
+      document.addEventListener('wpcf7invalid', cf7Fail);
+      document.addEventListener('wpcf7spam', cf7Fail);
     }
+
+    // 計測：フォーム入力開始（初回のみ dataLayer へ）
+    let weFormStarted = false;
+    form.addEventListener('input', () => {
+      if (weFormStarted) return;
+      weFormStarted = true;
+      if (window.dataLayer) window.dataLayer.push({ event: 'contact_form_start' });
+    });
   }
 })();
