@@ -1370,8 +1370,28 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 }
 .thanks-followup .tf-heading { font-size: 15px; font-weight: 700; }
 .thanks-followup .tf-text { margin-top: 10px; font-size: 12px; line-height: 1.9; }
-.thanks-followup .tf-check { margin-top: 16px; align-items: flex-start; }
-.thanks-followup .tf-check[hidden] { display: none; } /* .privacy-consent の display:flex に勝つ */
+/* 相談ボタン（黒CTA＝入力内容を確認する と同スタイル。FB 2026-09-23） */
+.thanks-followup .tf-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 20px;
+  justify-content: space-between;
+  background-color: #000;
+  border: 0;
+  line-height: 1;
+  display: inline-flex;
+  font-family: inherit;
+  letter-spacing: 0.08em;
+  color: #fff;
+  cursor: pointer;
+}
+.thanks-followup .tf-btn .text { margin-right: auto; border-bottom: 0 none; }
+.thanks-followup .tf-btn:hover { color: #fff; opacity: 0.8; }
+.thanks-followup .tf-btn:disabled { opacity: 0.4; pointer-events: none; }
+.thanks-followup .tf-btn[hidden] { display: none; } /* .ic-link の inline-flex に勝つ */
+@media (width < 1050px) {
+  .thanks-followup .tf-btn { padding: 14px 16px; }
+}
 @media (1050px <= width) {
   /* PC は .contact-thanks(415px) より広く出す（FB 2026-09-23） */
   .thanks-followup {
@@ -1625,8 +1645,8 @@ footer .f-copy {
     writing-mode: horizontal-tb;
     text-orientation: mixed;
     white-space: normal;
-    font-size: 19px;
-    font-weight: 700; /* MTG 2026-09-16: SPのみ見出しが分かりづらい→太字化（PCは現状維持） */
+    font-size: 18px; /* FB 2026-09-23: 級数1pt下げ */
+    font-weight: 600; /* MTG 2026-09-16→FB 2026-09-23: SPのみ「若干だけ」太く（PCは現状維持） */
     line-height: 1.6;
     letter-spacing: 0.08em;
     margin: 0;
@@ -1931,7 +1951,7 @@ footer .f-copy {
   .hero-area .key-phrase { font-size: 11px; }
   .hero-area .message { font-size: 13px; }
   .hero-area .cred { font-size: 11px; }
-  .section-title, .section-title.vertical-writing { font-size: 20px; }
+  .section-title, .section-title.vertical-writing { font-size: 19px; } /* FB 2026-09-23: 級数1pt下げ */
   .sec-en { font-size: 12px; }
   .problem-lead, .works-lead, .reason-lead, .pricing-lead, .zero-content p { font-size: 15px; }
   .problem-list h3 { font-size: 16px; }

@@ -650,6 +650,9 @@
         heading.textContent = initialHeading;
         lead.innerHTML = initialLead;
       }
+      // 完了画面ではリールアニメーション（モザイクビジュアル）を出さない（FB 2026-09-23）
+      const visual = document.querySelector('.contact-visual');
+      if (visual) visual.hidden = state === 'thanks';
     }
 
     // 確認画面：修正（フォームへ戻る）／送信（完了画面へ）
@@ -712,19 +715,20 @@
 
     // サンクス画面：イベントサイト相談の2段階チェック（MTG 2026-09-16）
     // チェックで operations 宛に追加希望を通知（WP版）。静的版は完了表示のみ
-    const evCheck = document.getElementById('eventSiteInterest');
-    if (evCheck) {
+    const evBtn = document.getElementById('eventSiteInterest');
+    if (evBtn) {
       let evSent = false;
       const evDone = document.getElementById('eventSiteDone');
-      const evLabel = evCheck.closest('.tf-check');
+      const evBtnText = evBtn.querySelector('.text');
       const evFinish = () => {
-        if (evLabel) evLabel.hidden = true;
+        evBtn.hidden = true;
         if (evDone) evDone.hidden = false;
       };
-      evCheck.addEventListener('change', () => {
-        if (!evCheck.checked || evSent) return;
+      evBtn.addEventListener('click', () => {
+        if (evSent) return;
         evSent = true;
-        evCheck.disabled = true;
+        evBtn.disabled = true;
+        if (evBtnText) evBtnText.textContent = '送信中…';
         if (window.dataLayer) window.dataLayer.push({ event: 'event_site_interest' });
         const evForm = document.querySelector('.cf7-bridge-event form');
         if (!evForm) { evFinish(); return; }
@@ -742,8 +746,8 @@
       const evFail = (e) => {
         if (!(e.target && e.target.closest && e.target.closest('.cf7-bridge-event'))) return;
         evSent = false;
-        evCheck.disabled = false;
-        evCheck.checked = false;
+        evBtn.disabled = false;
+        if (evBtnText) evBtnText.textContent = 'イベントサイト・キービジュアルについても相談したい';
       };
       document.addEventListener('wpcf7mailfailed', evFail);
       document.addEventListener('wpcf7invalid', evFail);
