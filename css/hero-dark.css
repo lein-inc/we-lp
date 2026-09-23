@@ -18,10 +18,8 @@ body.hero-dark .hero-sec::before {
   background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.35), rgba(0,0,0,0) 70%);
   pointer-events: none;
 }
-/* 黒地の上で画像の縁を締める */
+/* 黒地の上の画像縁：白アウトラインは廃止（FB 2026-09-23「縁の白線を消す」）、シャドウのみ */
 body.hero-dark .hero-area .hero-image {
-  outline: 1px solid rgba(255, 255, 255, 0.08);
-  outline-offset: -1px;
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.55);
 }
 body.hero-dark .hero-area .text { color: #ffffff; }
