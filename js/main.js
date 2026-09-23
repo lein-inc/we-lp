@@ -645,7 +645,7 @@
         lead.textContent = '内容に誤りがなければ「送信する」を押してください。';
       } else if (state === 'thanks') {
         heading.textContent = 'お問い合わせありがとうございました。';
-        lead.textContent = '担当者より、実績映像（ワークスリール）のご案内を追ってお送りいたします。';
+        lead.innerHTML = 'info@wewewe.jp より自動返信メールをお送りしています。<br class="pc-br">届いていない場合は、迷惑メールフォルダをご確認ください。<br>担当者より、実績映像（ワークスリール）のご案内を追ってお送りいたします。';
       } else {
         heading.textContent = initialHeading;
         lead.innerHTML = initialLead;

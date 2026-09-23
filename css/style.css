@@ -1372,6 +1372,15 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 .thanks-followup .tf-text { margin-top: 10px; font-size: 12px; line-height: 1.9; }
 .thanks-followup .tf-check { margin-top: 16px; align-items: flex-start; }
 .thanks-followup .tf-check[hidden] { display: none; } /* .privacy-consent の display:flex に勝つ */
+@media (1050px <= width) {
+  /* PC は .contact-thanks(415px) より広く出す（FB 2026-09-23） */
+  .thanks-followup {
+    width: 660px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 .thanks-followup .tf-done { margin-top: 16px; font-size: 12px; font-weight: 700; color: var(--key-color); }
 @media (1050px <= width) {
   .contact-sec form { max-width: 720px; }
