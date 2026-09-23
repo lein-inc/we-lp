@@ -692,18 +692,62 @@
         if (sendBtnText) sendBtnText.textContent = '送信中…';
         if (cf7form.requestSubmit) cf7form.requestSubmit(); else cf7form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       });
-      document.addEventListener('wpcf7mailsent', () => {
+      // イベントサイト相談ブリッジ（.cf7-bridge-event）のイベントはここでは扱わない
+      const isEventBridge = (e) => e.target && e.target.closest && e.target.closest('.cf7-bridge-event');
+      document.addEventListener('wpcf7mailsent', (e) => {
+        if (isEventBridge(e)) return;
         if (window.dataLayer) window.dataLayer.push({ event: 'contact_form_submit' });
         cf7Reset();
         showThanks();
       });
-      const cf7Fail = () => {
+      const cf7Fail = (e) => {
+        if (isEventBridge(e)) return;
         cf7Reset();
         alert('送信に失敗しました。お手数ですが、時間をおいて再度お試しください。');
       };
       document.addEventListener('wpcf7mailfailed', cf7Fail);
       document.addEventListener('wpcf7invalid', cf7Fail);
       document.addEventListener('wpcf7spam', cf7Fail);
+    }
+
+    // サンクス画面：イベントサイト相談の2段階チェック（MTG 2026-09-16）
+    // チェックで operations 宛に追加希望を通知（WP版）。静的版は完了表示のみ
+    const evCheck = document.getElementById('eventSiteInterest');
+    if (evCheck) {
+      let evSent = false;
+      const evDone = document.getElementById('eventSiteDone');
+      const evLabel = evCheck.closest('.tf-check');
+      const evFinish = () => {
+        if (evLabel) evLabel.hidden = true;
+        if (evDone) evDone.hidden = false;
+      };
+      evCheck.addEventListener('change', () => {
+        if (!evCheck.checked || evSent) return;
+        evSent = true;
+        evCheck.disabled = true;
+        if (window.dataLayer) window.dataLayer.push({ event: 'event_site_interest' });
+        const evForm = document.querySelector('.cf7-bridge-event form');
+        if (!evForm) { evFinish(); return; }
+        const map = { company: 'company', name: 'your-name', email: 'your-email', timing: 'timing', budget: 'budget' };
+        Object.keys(map).forEach((src) => {
+          const s = document.getElementById(src);
+          const d = evForm.querySelector('[name="' + map[src] + '"]');
+          if (s && d) d.value = s.value;
+        });
+        if (evForm.requestSubmit) evForm.requestSubmit(); else evForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      });
+      document.addEventListener('wpcf7mailsent', (e) => {
+        if (e.target && e.target.closest && e.target.closest('.cf7-bridge-event')) evFinish();
+      });
+      const evFail = (e) => {
+        if (!(e.target && e.target.closest && e.target.closest('.cf7-bridge-event'))) return;
+        evSent = false;
+        evCheck.disabled = false;
+        evCheck.checked = false;
+      };
+      document.addEventListener('wpcf7mailfailed', evFail);
+      document.addEventListener('wpcf7invalid', evFail);
+      document.addEventListener('wpcf7spam', evFail);
     }
 
     // 計測：フォーム入力開始（初回のみ dataLayer へ）

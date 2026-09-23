@@ -145,6 +145,15 @@ section { position: relative; }
 }
 /* 幅0ボックスの「右側」に文字を描くため vertical-lr（1列なので見た目は vertical-rl と同じ） */
 .section-title.vertical-writing { writing-mode: vertical-lr; }
+
+/* 波線強調（MTG 2026-09-16: KV・イベントサイト対応の一文を目立たせる） */
+.wavy {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--key-color);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
 @media (width < 1050px) {
   .section-title { font-size: 12px; }
 }
@@ -1352,6 +1361,18 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   max-width: 415px;
   margin-inline: auto;
 }
+/* サンクス画面：イベントサイト相談の2段階チェック（MTG 2026-09-16） */
+.thanks-followup {
+  margin-top: 36px;
+  padding: 22px 20px 24px;
+  border: 1px solid var(--main-font-color);
+  text-align: left;
+}
+.thanks-followup .tf-heading { font-size: 15px; font-weight: 700; }
+.thanks-followup .tf-text { margin-top: 10px; font-size: 12px; line-height: 1.9; }
+.thanks-followup .tf-check { margin-top: 16px; align-items: flex-start; }
+.thanks-followup .tf-check[hidden] { display: none; } /* .privacy-consent の display:flex に勝つ */
+.thanks-followup .tf-done { margin-top: 16px; font-size: 12px; font-weight: 700; color: var(--key-color); }
 @media (1050px <= width) {
   .contact-sec form { max-width: 720px; }
   .contact-sec .wrap-input {
@@ -1596,6 +1617,7 @@ footer .f-copy {
     text-orientation: mixed;
     white-space: normal;
     font-size: 19px;
+    font-weight: 700; /* MTG 2026-09-16: SPのみ見出しが分かりづらい→太字化（PCは現状維持） */
     line-height: 1.6;
     letter-spacing: 0.08em;
     margin: 0;

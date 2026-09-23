@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?ver=20260916b">
+<link rel="stylesheet" href="css/style.css?ver=20260923a">
 <link rel="stylesheet" href="css/hero-dark.css?ver=20260916a">
 </head>
 <body class="hero-dark">
@@ -252,7 +252,7 @@
       <p class="sec-en ff-obvia uppercase">Start from Zero</p>
       <div class="zero-content js-active">
         <p>何を伝えたいのか。何をテーマにするのか。この映像を通して、何を実現したいのか。Weの仕事は、撮る前・動かす前の<b class="b2">「設計」</b>から始まります。これまで数々の節目の映像を手がけるなかで、目的の整理からテーマづくり、構成のご提案まで、ご担当者の方と二人三脚で立ち上げてきました。内容が固まっていなくても——むしろ<b class="b3">固まっていないうちに</b>、ご相談ください。</p>
-        <p><b class="b4">映像のまわりも、映像と地続きで。</b><br>必要であれば、周年ロゴの開発や、式典全体の世界観をつくるキービジュアル・グラフィックの制作まで対応します。デザインと映像のチームだから、すべてがひとつのトーンで揃います。</p>
+        <p><b class="b4">映像のまわりも、映像と地続きで。</b><br>必要であれば、<span class="wavy">周年ロゴの開発や、式典全体の世界観をつくるキービジュアル・グラフィックの制作</span>まで対応します。デザインと映像のチームだから、すべてがひとつのトーンで揃います。</p>
       </div>
     </div>
   </section>
@@ -436,7 +436,15 @@
               <button type="button" class="ic-link anime-z3px" id="confirmSend"><span class="text">送信する</span><span class="ic-noborder"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5h9M7 1.5 10.5 5 7 8.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
             </div>
           </div>
-          <div class="contact-thanks" hidden></div>
+          <div class="contact-thanks" hidden>
+            <!-- イベントサイト相談の2段階チェック（MTG 2026-09-16） -->
+            <div class="thanks-followup" id="thanksFollowup">
+              <p class="tf-heading">イベントサイトでもお困りではありませんか？</p>
+              <p class="tf-text">式典・カンファレンスでは、特設サイトやキービジュアルまで手が回らない・リソースが足りない、というご相談も多くいただきます。Weはイベントサイト・キービジュアルの制作までワンストップで対応しています。</p>
+              <label class="privacy-consent tf-check"><input type="checkbox" id="eventSiteInterest">イベントサイト・キービジュアルについても相談したい</label>
+              <p class="tf-done" id="eventSiteDone" hidden>承知しました。ご面談の際にあわせてご案内いたします。</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -450,6 +458,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?ver=20260916a"></script>
+<script src="js/main.js?ver=20260923a"></script>
 </body>
 </html>
