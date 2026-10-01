@@ -685,7 +685,7 @@
         // WP版：非表示のCF7フォーム（.cf7-bridge）へ値を写して送信。静的版はサンクス表示のみ
         const cf7form = document.querySelector('.cf7-bridge form');
         if (!cf7form) { showThanks(); return; }
-        const map = { company: 'company', department: 'department', name: 'your-name', nameKana: 'name-kana', timing: 'timing', budget: 'budget', email: 'your-email' };
+        const map = { company: 'company', department: 'department', name: 'your-name', nameKana: 'name-kana', timing: 'timing', budget: 'budget', email: 'your-email', message: 'message' };
         Object.keys(map).forEach((src) => {
           const s = document.getElementById(src);
           const d = cf7form.querySelector('[name="' + map[src] + '"]');

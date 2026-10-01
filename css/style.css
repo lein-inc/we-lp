@@ -1411,6 +1411,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   }
   .contact-sec .form-group { margin-bottom: 0 !important; }
   .contact-sec .privacy-group { grid-column: 1 / -1; }
+  .contact-sec .message-group { grid-column: 1 / -1; }
 }
 .contact-sec .sec-en,
 .contact-heading,
@@ -1423,7 +1424,8 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   justify-content: space-between;
   align-items: center;
 }
-.contact-sec .required {
+.contact-sec .required,
+.contact-sec .optional {
   font-size: 10px;
   padding: 2px 8px;
   background-color: rgb(255 255 255 / 0.5);
@@ -1436,6 +1438,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   color: #fff;
 }
 .contact-sec select,
+.contact-sec textarea,
 .contact-sec [type="text"],
 .contact-sec [type="email"] {
   display: block;
@@ -1448,6 +1451,11 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   font-size: 13px;
 }
 .contact-sec ::placeholder { color: var(--line-gray); }
+.contact-sec textarea {
+  min-height: 120px;
+  line-height: 1.8;
+  resize: vertical;
+}
 .contact-sec select {
   -webkit-appearance: none;
   appearance: none;
@@ -1574,7 +1582,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   font-size: 12px;
   padding-top: 1px;
 }
-.confirm-list dd { word-break: break-all; }
+.confirm-list dd { word-break: break-all; white-space: pre-wrap; }
 .confirm-actions {
   margin-top: 40px;
   display: flex;
@@ -1742,7 +1750,7 @@ footer .f-copy {
   .contact-heading { font-size: 20px; }
   .contact-sec form { font-size: 13px; }
   .contact-sec .required { font-size: 10px; }
-  .contact-sec input[type="text"], .contact-sec input[type="email"], .contact-sec select { font-size: 13px; padding: 0.9em 1em; }
+  .contact-sec input[type="text"], .contact-sec input[type="email"], .contact-sec select, .contact-sec textarea { font-size: 13px; padding: 0.9em 1em; }
   .privacy-box { font-size: 11px; }
   .privacy-box h5 { font-size: 11px; }
   .privacy-hint { font-size: 11px; }
@@ -1818,7 +1826,7 @@ footer .f-copy {
   .privacy-box h5 { font-size: 10.5px; margin: 10px 0 2px; }
   .privacy-consent { font-size: 12px; }
   /* フォーム入力欄 */
-  .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { padding: 0.7em 0.9em; font-size: 13px; margin-top: 6px; }
+  .contact-sec select, .contact-sec textarea, .contact-sec [type="text"], .contact-sec [type="email"] { padding: 0.7em 0.9em; font-size: 13px; margin-top: 6px; }
   .contact-sec .form-group:not(:last-of-type) { margin-bottom: 14px; }
   .contact-sec button[type="submit"], .confirm-actions button { padding: 14px 16px; }
 
@@ -1973,7 +1981,7 @@ footer .f-copy {
   .privacy-box { font-size: 11px; }
   .privacy-box h5 { font-size: 11.5px; }
   .privacy-consent { font-size: 13px; }
-  .contact-sec select, .contact-sec [type="text"], .contact-sec [type="email"] { font-size: 14px; }
+  .contact-sec select, .contact-sec textarea, .contact-sec [type="text"], .contact-sec [type="email"] { font-size: 14px; }
   .nda .more a { font-size: 13px; }
   .sp-menu-contact a { font-size: 14px; }
   .fixed-right .contact-link a { font-size: 14px; }

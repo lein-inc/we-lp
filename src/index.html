@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?ver=20260923e">
+<link rel="stylesheet" href="css/style.css?ver=20261001a">
 <link rel="stylesheet" href="css/hero-dark.css?ver=20260923d">
 </head>
 <body class="hero-dark">
@@ -383,6 +383,10 @@
                 <label for="emailConfirm">メールアドレス（確認用）<span class="required">必須</span></label>
                 <input type="email" id="emailConfirm" name="emailConfirm" placeholder="you@example.co.jp" required autocomplete="off">
               </div>
+              <div class="form-group message-group">
+                <label for="message">ご相談内容<span class="optional">任意</span></label>
+                <textarea id="message" name="message" rows="5" placeholder="例）2027年3月の創立30周年式典で上映するオープニング映像を検討しています。尺は3分程度、登壇者インタビューも入れたいと考えています。"></textarea>
+              </div>
               <div class="form-group privacy-group">
                 <label id="privacyLabel">プライバシーポリシー<span class="required">必須</span></label>
                 <!-- 文面は https://wewewe.jp/privacypolicy/ より（2026-08-25取得） -->
@@ -428,6 +432,7 @@
               <div><dt>検討中の時期</dt><dd data-confirm="timing"></dd></div>
               <div><dt>ご予算</dt><dd data-confirm="budget"></dd></div>
               <div><dt>メールアドレス</dt><dd data-confirm="email"></dd></div>
+              <div><dt>ご相談内容</dt><dd data-confirm="message"></dd></div>
             </dl>
             <div class="confirm-actions">
               <button type="button" class="ic-link anime-z3px" id="confirmBack"><span class="ic-noborder ic-back"><svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M11 5H2M5 1.5 1.5 5 5 8.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="text">入力内容を修正する</span></button>
@@ -456,6 +461,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?ver=20260923c"></script>
+<script src="js/main.js?ver=20261001a"></script>
 </body>
 </html>
