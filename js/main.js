@@ -156,7 +156,7 @@
   const contactWrap = document.querySelector('.contact-visual');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if ((heroWrap || contactWrap) && !reduceMotion && typeof HTMLCanvasElement === 'function') {
-    const names = ['one-and-co', 'smbc', 'softbank', 'recruit', 'mitsui-fudosan', 'speeda', 'loglass', 'lib-consulting', 'newspicks'];
+    const names = ['one-and-co-2nd', 'smbc', 'moneyforward', 'softbank', 'recruit', 'asahi-intecc', 'mitsui-fudosan', 'speeda', 'sando', 'loglass', 'lib-consulting', 'newspicks'];
     const HOLD = 2200;
     const TRANS = 1100;
     const MAX_BLOCK = 40;
