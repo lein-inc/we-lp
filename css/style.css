@@ -1037,21 +1037,21 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 .corp-link {
   grid-column: 1 / -1;
   margin-top: 44px;
-  padding-bottom: 24px; /* ボタン下の余白（FB 2026-10-28） */
+  padding-bottom: 40px; /* ボタン下の余白（FB 2026-10-28） */
   text-align: center;
 }
 @media (1050px <= width) {
-  .corp-link { grid-column: 2 / span 8; margin-top: 64px; padding-bottom: 40px; }
+  .corp-link { grid-column: 2 / span 8; margin-top: 64px; padding-bottom: 64px; }
 }
 .corp-link-text { font-size: 12px; line-height: 2; }
 @media (1050px <= width) {
   .corp-link-text { font-size: 13px; line-height: 2.2; }
 }
 .corp-link-logo { margin-top: 32px; }
-.corp-link-logo img { display: block; width: 90px; height: auto; margin-inline: auto; }
+.corp-link-logo img { display: block; width: 75px; height: auto; margin-inline: auto; }
 @media (1050px <= width) {
   .corp-link-logo { margin-top: 40px; }
-  .corp-link-logo img { width: 120px; }
+  .corp-link-logo img { width: 100px; }
 }
 .corp-link .corp-link-btn {
   margin-top: 20px;
