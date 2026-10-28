@@ -1046,8 +1046,14 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 @media (1050px <= width) {
   .corp-link-text { font-size: 13px; line-height: 2.2; }
 }
+.corp-link-logo { margin-top: 32px; }
+.corp-link-logo img { width: 120px; height: auto; }
+@media (1050px <= width) {
+  .corp-link-logo { margin-top: 40px; }
+  .corp-link-logo img { width: 160px; }
+}
 .corp-link .corp-link-btn {
-  margin-top: 18px;
+  margin-top: 20px;
   display: inline-flex;
   width: 100%;
   max-width: 380px;
