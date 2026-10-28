@@ -1037,11 +1037,10 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 .corp-link {
   grid-column: 1 / -1;
   margin-top: 44px;
-  padding-bottom: 40px; /* ボタン下の余白（FB 2026-10-28） */
   text-align: center;
 }
 @media (1050px <= width) {
-  .corp-link { grid-column: 2 / span 8; margin-top: 64px; padding-bottom: 64px; }
+  .corp-link { grid-column: 2 / span 8; margin-top: 64px; }
 }
 .corp-link-text { font-size: 12px; line-height: 2; }
 @media (1050px <= width) {
@@ -1054,7 +1053,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   .corp-link-logo img { width: 100px; }
 }
 .corp-link .corp-link-btn {
-  margin-top: 20px;
+  margin-top: 30px; /* ロゴとボタンの間隔（FB 2026-10-28） */
   display: inline-flex;
   width: 100%;
   max-width: 380px;
@@ -1070,7 +1069,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 .corp-link .corp-link-btn .text { margin-right: auto; border-bottom: 0 none; }
 .corp-link .corp-link-btn:hover { color: #fff; opacity: 0.8; }
 @media (1050px <= width) {
-  .corp-link .corp-link-btn { padding: 20px 24px; font-size: 13px; }
+  .corp-link .corp-link-btn { margin-top: 40px; padding: 20px 24px; font-size: 13px; }
 }
 
 /* 6. START FROM ZERO
