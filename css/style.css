@@ -1032,6 +1032,40 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   .reason-note .strong { font-size: 18px; }
 }
 
+/* Weの強み：メインサイト（wewewe.jp）への導線（MTG 2026-10-15）
+   SEO/AIO上の相互リンク。黒ボタン＝サンクス画面の相談ボタンと同スタイル */
+.corp-link {
+  grid-column: 1 / -1;
+  margin-top: 44px;
+  text-align: center;
+}
+@media (1050px <= width) {
+  .corp-link { grid-column: 2 / span 8; margin-top: 64px; }
+}
+.corp-link-text { font-size: 12px; line-height: 2; }
+@media (1050px <= width) {
+  .corp-link-text { font-size: 13px; line-height: 2.2; }
+}
+.corp-link .corp-link-btn {
+  margin-top: 18px;
+  display: inline-flex;
+  width: 100%;
+  max-width: 380px;
+  padding: 16px 18px;
+  justify-content: space-between;
+  background-color: #000;
+  border: 0;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: #fff;
+  font-size: 12px;
+}
+.corp-link .corp-link-btn .text { margin-right: auto; border-bottom: 0 none; }
+.corp-link .corp-link-btn:hover { color: #fff; opacity: 0.8; }
+@media (1050px <= width) {
+  .corp-link .corp-link-btn { padding: 20px 24px; font-size: 13px; }
+}
+
 /* 6. START FROM ZERO
 ----------------------------------------------------*/
 .zero-sec {
