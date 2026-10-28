@@ -1047,7 +1047,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   .corp-link-text { font-size: 13px; line-height: 2.2; }
 }
 .corp-link-logo { margin-top: 32px; }
-.corp-link-logo img { width: 120px; height: auto; }
+.corp-link-logo img { display: block; width: 120px; height: auto; margin-inline: auto; }
 @media (1050px <= width) {
   .corp-link-logo { margin-top: 40px; }
   .corp-link-logo img { width: 160px; }
