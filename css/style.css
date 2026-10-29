@@ -2051,6 +2051,7 @@ footer .f-copy {
 .plan-table { display: grid; grid-template-columns: 92px repeat(3, 240px); grid-template-rows: auto repeat(4, auto); column-gap: 0; min-width: max-content; }
 .plan-head, .plan-card { display: grid; grid-template-rows: subgrid; grid-row: 1 / span 5; }
 .plan-head { position: sticky; left: 0; z-index: 1; background: #fff; }
+.plan-head::after { content: ""; position: absolute; top: 0; bottom: 0; right: 100%; width: var(--grid-gap); background: #fff; } /* SP: 固定列の左の余白分も覆う */
 .plan-head > span { font-size: 12px; padding: 16px 0; border-top: 0.5px solid var(--line-gray); display: flex; align-items: center; color: var(--main-font-color); }
 .plan-head > span:first-child { border-top: 0; }
 .plan-head > span:not(:first-child)::before { content: ""; display: inline-block; width: 4px; height: 4px; background-color: var(--key-color); border-radius: 50%; margin-right: 0.6em; flex: 0 0 4px; }
@@ -2072,6 +2073,7 @@ footer .f-copy {
   .plan-table-wrap { grid-column: 2 / span 8; margin-top: 56px; margin-inline: 0; padding-inline: 0; overflow: visible; }
   .plan-table { grid-template-columns: 150px repeat(3, 1fr); min-width: 0; }
   .plan-head { position: static; background: transparent; }
+  .plan-head::after { content: none; }
   .plan-head > span { font-size: 13px; padding: 20px 0; }
   .plan-head > span:not(:first-child)::before { margin-right: 0.8em; }
   .plan-card > * { padding: 20px 24px; }
