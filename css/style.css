@@ -2044,3 +2044,42 @@ footer .f-copy {
 /* Weロゴ（右下）：PC/SP とも通常は非表示、お問い合わせブロック到達（.hide-fixed-ui）で表示（FB 2026-09-10） */
 .fixed-right .logo-area { opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; }
 .hide-fixed-ui .fixed-right .logo-area { opacity: 1; visibility: visible; }
+
+/* ===== 料金プラン 縦型比較表（MTG 2026-10-15 合意②・実装 2026-10-30）PC/SP 同一レイアウト・SPは横スクロール ===== */
+.plan-table-wrap { grid-column: 1 / -1; margin-top: 40px; overflow-x: auto; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+  margin-inline: calc(-1 * var(--grid-gap)); padding-inline: var(--grid-gap); scrollbar-width: thin; }
+.plan-table { display: grid; grid-template-columns: 92px repeat(3, 240px); grid-template-rows: auto repeat(4, auto); column-gap: 0; min-width: max-content; }
+.plan-head, .plan-card { display: grid; grid-template-rows: subgrid; grid-row: 1 / span 5; }
+.plan-head { position: sticky; left: 0; z-index: 1; background: #fff; }
+.plan-head > span { font-size: 12px; padding: 16px 0; border-top: 0.5px solid var(--line-gray); display: flex; align-items: center; color: var(--main-font-color); }
+.plan-head > span:first-child { border-top: 0; }
+.plan-head > span:not(:first-child)::before { content: ""; display: inline-block; width: 4px; height: 4px; background-color: var(--key-color); border-radius: 50%; margin-right: 0.6em; flex: 0 0 4px; }
+.plan-card > * { padding: 16px 16px; border-top: 0.5px solid var(--line-gray); }
+.plan-card > .plan-name { border-top: 0; padding: 0 16px 16px; }
+.plan-card.is-recommended { background: #f5f5f5; }
+.plan-name { font-size: 15px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; }
+.plan-name::before { content: ""; display: inline-block; width: 4px; height: 4px; background-color: var(--key-color); border-radius: 50%; flex: 0 0 4px; }
+.plan-name .badge { font-size: 10px; letter-spacing: 0.12em; line-height: 1; padding: 5px 8px 4px; color: #fff; background: var(--key-color); }
+.plan-cell p { font-size: 12px; line-height: 1.85; color: var(--sub-gray); }
+.plan-cell .plan-price { font-size: 20px; letter-spacing: 0.02em; color: var(--en-black); font-weight: 700; line-height: 1.4; }
+.plan-price small { display: inline-block; white-space: nowrap; font-size: 11px; color: var(--sub-gray); font-weight: 500; margin-left: 6px; }
+.plan-note { grid-column: 1 / -1; margin-top: 16px; font-size: 11px; color: var(--sub-gray); line-height: 1.9; }
+.plan-scroll-hint { grid-column: 1 / -1; margin-top: 12px; font-size: 10px; color: var(--sub-gray); letter-spacing: 0.1em; text-align: right; }
+.pricing-sub { grid-column: 1 / -1; margin-top: 56px; font-size: 14px; display: flex; align-items: center; }
+.pricing-sub::before { content: ""; display: inline-block; width: 12px; height: 0.5px; background: var(--main-font-color); margin-right: 10px; }
+.pricing-sub + .pricing-list { margin-top: 24px; }
+@media (1050px <= width) {
+  .plan-table-wrap { grid-column: 2 / span 8; margin-top: 56px; margin-inline: 0; padding-inline: 0; overflow: visible; }
+  .plan-table { grid-template-columns: 150px repeat(3, 1fr); min-width: 0; }
+  .plan-head { position: static; background: transparent; }
+  .plan-head > span { font-size: 13px; padding: 20px 0; }
+  .plan-head > span:not(:first-child)::before { margin-right: 0.8em; }
+  .plan-card > * { padding: 20px 24px; }
+  .plan-card > .plan-name { padding: 0 24px 20px; }
+  .plan-name { font-size: 17px; }
+  .plan-cell p { font-size: 13px; }
+  .plan-cell .plan-price { font-size: 24px; }
+  .plan-note { grid-column: 2 / span 8; margin-top: 20px; font-size: 12px; }
+  .plan-scroll-hint { display: none; }
+  .pricing-sub { grid-column: 2 / span 6; margin-top: 80px; font-size: 16px; }
+}
