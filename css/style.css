@@ -2056,7 +2056,7 @@ footer .f-copy {
 .plan-head > span:first-child { border-top: 0; }
 .plan-head > span:not(:first-child)::before { content: ""; display: inline-block; width: 4px; height: 4px; background-color: var(--key-color); border-radius: 50%; margin-right: 0.6em; flex: 0 0 4px; }
 .plan-card > * { padding: 16px 16px; border-top: 0.5px solid var(--line-gray); }
-.plan-card > .plan-name { border-top: 0; padding: 0 16px 16px; }
+.plan-card > .plan-name { border-top: 0; padding: 16px 16px; } /* 上下同量（FB 2026-10-30） */
 .plan-card.is-recommended { background: #f5f5f5; }
 .plan-name { font-size: 15px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; }
 .plan-name::before { content: ""; display: inline-block; width: 4px; height: 4px; background-color: var(--key-color); border-radius: 50%; flex: 0 0 4px; }
@@ -2066,7 +2066,7 @@ footer .f-copy {
 .plan-price small { display: inline-block; white-space: nowrap; font-size: 11px; color: var(--sub-gray); font-weight: 500; margin-left: 6px; }
 .plan-note { grid-column: 1 / -1; margin-top: 16px; font-size: 11px; color: var(--sub-gray); line-height: 1.9; }
 .plan-scroll-hint { grid-column: 1 / -1; margin-top: 12px; font-size: 10px; color: var(--sub-gray); letter-spacing: 0.1em; text-align: right; }
-.pricing-sub { grid-column: 1 / -1; margin-top: 56px; font-size: 14px; display: flex; align-items: center; }
+.pricing-sub { grid-column: 1 / -1; margin-top: 72px; font-size: 14px; display: flex; align-items: center; }
 .pricing-sub::before { content: ""; display: inline-block; width: 12px; height: 0.5px; background: var(--main-font-color); margin-right: 10px; }
 .pricing-sub + .pricing-list { margin-top: 24px; }
 @media (1050px <= width) {
@@ -2077,11 +2077,11 @@ footer .f-copy {
   .plan-head > span { font-size: 13px; padding: 20px 0; }
   .plan-head > span:not(:first-child)::before { margin-right: 0.8em; }
   .plan-card > * { padding: 20px 24px; }
-  .plan-card > .plan-name { padding: 0 24px 20px; }
+  .plan-card > .plan-name { padding: 20px 24px; }
   .plan-name { font-size: 17px; }
   .plan-cell p { font-size: 13px; }
   .plan-cell .plan-price { font-size: 24px; }
   .plan-note { grid-column: 2 / span 8; margin-top: 20px; font-size: 12px; }
   .plan-scroll-hint { display: none; }
-  .pricing-sub { grid-column: 2 / span 6; margin-top: 80px; font-size: 16px; }
+  .pricing-sub { grid-column: 2 / span 6; margin-top: 110px; font-size: 16px; }
 }
