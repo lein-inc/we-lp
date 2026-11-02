@@ -1691,6 +1691,8 @@ footer .f-address {
   letter-spacing: 0.06em;
   line-height: 1.8;
 }
+footer .f-address a { color: inherit; }
+footer .f-address a:hover { color: var(--main-font-color); }
 footer .f-copy {
   grid-column: 1 / -1;
   font-size: 10px;
