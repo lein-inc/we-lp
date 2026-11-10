@@ -1302,15 +1302,16 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
 .faq-q {
   display: flex;
   align-items: baseline;
-  gap: 0.6em;
+  gap: 0;
   padding: 24px 0 14px;
   font-size: 14px;
   font-weight: 500;
 }
-.faq-no { flex: 0 0 auto; font-size: 11px; color: var(--key-color); letter-spacing: 0.06em; } /* 番号はキーカラー（赤） */
+.faq-no { flex: 0 0 var(--faq-no-w); font-size: 11px; color: var(--key-color); letter-spacing: 0.06em; } /* 番号はキーカラー（赤）・幅固定で回答と頭を揃える */
+.faq-list { --faq-no-w: 34px; } /* "Q23." が収まる幅（2026-11-10 回答インデント）
 .faq-q-text { display: inline; }
 .faq-list .faq-item p {
-  padding: 0 24px 26px 0;
+  padding: 0 24px 26px var(--faq-no-w); /* 回答は質問テキストの頭に揃える */
   color: var(--sub-gray);
   max-width: 640px;
   line-height: 2;
