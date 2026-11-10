@@ -410,7 +410,7 @@
   })();
 
   // 本文要素全体にスクロール時フェードインを付与（FB 2026-09-10）。既存の .js-active に加える
-  ['.clients-marquee', '.clients-note', '.flow-list > li', '.pricing-list > .pricing-item', '.faq-list > details',
+  ['.clients-marquee', '.clients-note', '.flow-list > li', '.pricing-list > .pricing-item', '.faq-list > .faq-item',
    '.contact-heading', '.contact-visual', '.contact-sec form', 'footer .f-info', 'footer .f-copy']
     .forEach((sel) => document.querySelectorAll(sel).forEach((el) => el.classList.add('js-active')));
 
