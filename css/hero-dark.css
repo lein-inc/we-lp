@@ -25,7 +25,7 @@ body.hero-dark .hero-area .hero-image {
 body.hero-dark .hero-area .text { color: #ffffff; }
 body.hero-dark .hero-area .key-phrase { color: #ffffff; }
 body.hero-dark .hero-area .message { color: #ededed; }
-body.hero-dark .hero-area .cred { color: #9a9a9a; }
+body.hero-dark .hero-area .cred { color: #c8c8c8; } /* 2026-11-10 #9a9a9a→少し白寄り */
 body.hero-dark .scroll-wrapper .scroll { color: #ffffff; }
 body.hero-dark .scroll .ic { color: var(--key-color); }
 
