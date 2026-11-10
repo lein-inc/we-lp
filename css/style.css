@@ -1308,7 +1308,7 @@ b.b1:hover::after, b.b2:hover::after, b.b3:hover::after, b.b4:hover::after {
   font-weight: 500;
 }
 .faq-no { flex: 0 0 var(--faq-no-w); font-size: 11px; color: var(--key-color); letter-spacing: 0.06em; } /* 番号はキーカラー（赤）・幅固定で回答と頭を揃える */
-.faq-list { --faq-no-w: 34px; } /* "Q23." が収まる幅（2026-11-10 回答インデント）
+.faq-list { --faq-no-w: 34px; } /* "Q23." が収まる幅（2026-11-10 回答インデント） */
 .faq-q-text { display: inline; }
 .faq-list .faq-item p {
   padding: 0 24px 26px var(--faq-no-w); /* 回答は質問テキストの頭に揃える */
