@@ -685,7 +685,7 @@
         // WP版：非表示のCF7フォーム（.cf7-bridge）へ値を写して送信。静的版はサンクス表示のみ
         const cf7form = document.querySelector('.cf7-bridge form');
         if (!cf7form) { showThanks(); return; }
-        const map = { company: 'company', department: 'department', name: 'your-name', nameKana: 'name-kana', timing: 'timing', budget: 'budget', email: 'your-email', message: 'message' };
+        const map = { company: 'company', department: 'department', name: 'your-name', nameKana: 'name-kana', email: 'your-email', message: 'message' }; // 検討中の時期・ご予算は 2026-11-10 に削除（11/5 定例）
         Object.keys(map).forEach((src) => {
           const s = document.getElementById(src);
           const d = cf7form.querySelector('[name="' + map[src] + '"]');
@@ -732,7 +732,7 @@
         if (window.dataLayer) window.dataLayer.push({ event: 'event_site_interest' });
         const evForm = document.querySelector('.cf7-bridge-event form');
         if (!evForm) { evFinish(); return; }
-        const map = { company: 'company', name: 'your-name', email: 'your-email', timing: 'timing', budget: 'budget' };
+        const map = { company: 'company', name: 'your-name', email: 'your-email' };
         Object.keys(map).forEach((src) => {
           const s = document.getElementById(src);
           const d = evForm.querySelector('[name="' + map[src] + '"]');
